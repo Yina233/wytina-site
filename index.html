@@ -1,0 +1,980 @@
+<!doctype html>
+<html lang="zh-CN" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#C6C6B4">
+<meta name="description" content="王裔天 Yitian Wang (Tina) · 观众研究 × 展览实践 · 伦敦 / 上海">
+<title>王裔天 Yitian Wang</title>
+<style>
+/* Layout (Atlason direction):
+   Landscape screens (desktop, sideways iPad): one white band of four joined columns, centred on a coloured wall.
+   Portrait screens (phone, upright iPad): four small white cards in a centred column.
+   A column opens into a "room": a white sheet on the same wall. The About room uses a warmer wall. */
+@font-face{font-family:"Hanken Grotesk";src:url("fonts/hanken-grotesk-400.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Hanken Grotesk";src:url("fonts/hanken-grotesk-500.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"Hanken Grotesk";src:url("fonts/hanken-grotesk-600.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap}
+:root{
+  --wall:#C6C6B4;       /* 灰苔 grey moss: the wall behind everything */
+  --wall-about:#CEC7BB; /* 暖石 warm stone: the About room */
+  --paper:#ffffff;
+  --ink:#111111;
+  --ink-soft:#75756f;   /* labels, captions */
+  --rule:#e3e3de;
+  --accent:#111111;
+  --slot:#efefec;
+  --sans:"Hanken Grotesk","Helvetica Neue",Helvetica,Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Noto Sans SC",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  --s-title:clamp(30px,3.4vw,44px);
+  --s-h2:clamp(22px,2.1vw,30px);
+  --s-h3:clamp(18px,1.6vw,22px);
+  --s-body:16px;
+  --s-small:13px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--wall);color:var(--ink);font-family:var(--sans);font-size:var(--s-body);font-weight:400;line-height:1.55;-webkit-font-smoothing:antialiased;transition:background-color .5s ease}
+body.room-about{background:var(--wall-about)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+html[data-lang="zh"] .en,html[data-lang="en"] .zh{display:none!important}
+html[data-lang="zh"] body{line-height:1.75}
+
+.bg{position:fixed;inset:0;z-index:0;background-size:cover;background-position:center}
+.bg-note{position:fixed;right:16px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:3;font:11px/1.4 var(--mono);background:var(--paper);padding:4px 8px}
+
+/* top bar */
+.bar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:calc(12px + env(safe-area-inset-top,0px)) 16px 12px;pointer-events:none}
+.bar>*{pointer-events:auto}
+.bar{transition:transform .6s var(--ease-in,ease)}
+body.in-room.scroll-down .bar{transform:translateY(-110%)}
+.chip{display:inline-flex;align-items:center;gap:5px;background:var(--paper);color:var(--ink);border:0;font:500 13px/1 var(--sans);padding:10px 14px;min-height:36px;text-decoration:none;cursor:pointer}
+.chip:hover{background:var(--ink);color:var(--paper)}
+.lang b{font-weight:500}.lang b.off{color:var(--ink-soft);font-weight:400}
+.chip:hover b.off{color:var(--paper)}
+.home-link{visibility:hidden;opacity:0;transition:opacity .4s,visibility 0s .4s}
+body.in-room .home-link{visibility:visible;opacity:1;transition:opacity .6s .5s}
+body.in-room .bg-note{display:none}
+
+/* ---------- home ---------- */
+main.home{position:relative;z-index:2;min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;
+  padding:calc(64px + env(safe-area-inset-top,0px)) 16px calc(28px + env(safe-area-inset-bottom,0px))}
+.band{display:flex;flex-direction:column;align-items:center;gap:12px}
+.col{position:relative;background:var(--paper);color:var(--ink);overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.col-in{position:relative;flex:1 1 auto;min-height:0;display:flex;flex-direction:column;transform-origin:50% 10px;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+@media (hover:hover){body:not(.is-busy) .col:hover .col-in{transform:scale(.98)}}
+.col:active .col-in{transform:scale(.98)}
+.col a{text-decoration:none}
+.col h2{margin:0;font-weight:500;line-height:.95;letter-spacing:-.022em;white-space:nowrap}
+html[data-lang="zh"] .col h2{line-height:1.1;letter-spacing:0}
+.col .soft{color:var(--ink-soft)}
+.fill{flex:1 1 auto;min-height:0;position:relative;overflow:hidden;background:var(--slot)}
+.fill img,.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--pos,50% 50%);display:block}
+.spacer{flex:1 1 auto}
+.finds{display:flex;flex-direction:column;margin:0;padding:0;list-style:none}
+.slogan{margin:0;font-weight:500}
+.info{display:grid;font-weight:400}
+.info>div{display:flex;flex-direction:column;min-width:0}
+.info a:hover,.tabs a:hover,.col h2 a:hover{text-decoration:underline;text-underline-offset:3px}
+.tabs{display:flex;font-weight:500}
+.tabs .on{border-bottom:2px solid var(--accent)}
+.masonry{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
+.masonry>div{display:flex;flex-direction:column;min-width:0}
+.tile{display:flex;flex-direction:column;min-width:0}
+.thumb{position:relative;display:block;overflow:hidden;background:var(--slot);aspect-ratio:var(--ar,1)}
+.tile span{font-weight:400;line-height:1.2}
+.line{height:2px;width:40px;background:var(--accent)}
+.d-only{display:none!important}
+.col h2 a::after{content:"";position:absolute;inset:0;z-index:0}
+.info a,.tabs a,.tile{position:relative;z-index:1}
+.thumb{aspect-ratio:var(--arm,1)}
+
+/* portrait: a column of small cards (sizes follow the card, via container queries) */
+/* note: a container's own padding can't use cqi (it would measure the viewport), so it uses --ch */
+.col{--ch:clamp(124px,calc((100svh - 150px) / 4),250px);width:calc(var(--ch) * 1.28);height:var(--ch);container-type:size}
+.col-in{padding:calc(var(--ch) * .042) calc(var(--ch) * .046) calc(var(--ch) * .05);gap:calc(var(--ch) * .034)}
+.col h2{font-size:11.8cqi}
+html[data-lang="zh"] .col h2{font-size:9.2cqi}
+.c-about .col-in{padding:0;gap:0}
+.c-about h2{padding:3.4cqi 3.6cqi 2.8cqi}
+.c-about .info{grid-template-columns:repeat(2,max-content);gap:5.5cqi;padding:2.4cqi 3.6cqi 2.8cqi;font-size:max(9px,3.6cqi);line-height:1.25}
+.c-research .finds{gap:1.2cqi;font-size:max(11px,5cqi);line-height:1.15;font-weight:500}
+html[data-lang="zh"] .c-research .finds{line-height:1.35}
+.c-research .slogan{font-size:max(12px,5.9cqi);line-height:1.12;letter-spacing:-.01em}
+html[data-lang="zh"] .c-research .slogan{font-size:max(12px,5.4cqi);line-height:1.4;letter-spacing:0}
+.c-exhibitions .col-in{padding-bottom:0}
+.c-exhibitions .tabs{gap:3.6cqi;font-size:max(10px,4.5cqi);margin-top:-.6cqi}
+.c-exhibitions .tabs .on{border-bottom-width:1.5px}
+.masonry{gap:2.3cqi}.masonry>div{gap:2.3cqi}
+.c-exhibitions .tile span{display:none}
+.c-museums .note{margin:0;font-size:max(10px,5cqi);line-height:1.15;font-weight:500}
+html[data-lang="zh"] .c-museums .note{line-height:1.35}
+
+/* landscape: one band of joined columns (sizes follow the band) */
+@media (orientation:landscape) and (min-width:900px) and (min-height:460px){
+  .band{flex-direction:row;align-items:stretch;gap:0;container-type:size;
+    width:min(1200px,84vw,calc((100svh - 170px) * 2));aspect-ratio:2/1}
+  .col{width:auto;height:auto;container-type:normal;flex:var(--f) 1 0}
+  .col-in{padding:.83cqw 1cqw 1.15cqw;gap:0}
+  .c-about{--f:40}.c-research{--f:25}.c-exhibitions{--f:32}.c-museums{--f:23}
+  .c-about .col-in{padding:0}.c-exhibitions .col-in{padding-bottom:0}
+  .d-only{display:revert!important}.m-only{display:none!important}
+  .info div.d-only,.tile.d-only,.c-museums .places.d-only{display:flex!important}
+  .thumb{aspect-ratio:var(--ar,1)}
+  .col h2{font-size:max(26px,3.67cqw);letter-spacing:-.023em}
+  html[data-lang="zh"] .col h2{font-size:max(22px,2.83cqw)}
+  .c-about h2{padding:.83cqw 1cqw 1cqw}
+  .c-research h2,.c-museums h2{margin-bottom:1.15cqw}
+  .c-exhibitions h2{margin-bottom:.5cqw}
+  .c-about .info{grid-template-columns:repeat(4,minmax(0,1fr));gap:.83cqw;padding:1cqw;font-size:max(10px,.92cqw);line-height:1.3}
+  .c-research .finds{gap:.67cqw;font-size:max(13px,1.5cqw);line-height:1.1;letter-spacing:-.01em}
+  html[data-lang="zh"] .c-research .finds{font-size:max(13px,1.33cqw);line-height:1.35;letter-spacing:0}
+  .eyebrow{margin:0 0 .67cqw;font-size:max(10px,.92cqw);color:var(--ink-soft);font-weight:400}
+  .c-research .slogan,.c-museums .slogan{font-size:max(15px,1.83cqw);line-height:1.08;letter-spacing:-.014em}
+  html[data-lang="zh"] .c-research .slogan,html[data-lang="zh"] .c-museums .slogan{font-size:max(14px,1.58cqw);line-height:1.4;letter-spacing:0}
+  .line{margin-top:1.15cqw}
+  .c-exhibitions .tabs{gap:1.15cqw;font-size:max(13px,1.5cqw);margin:0 0 1cqw}
+  html[data-lang="zh"] .c-exhibitions .tabs{font-size:max(13px,1.33cqw)}
+  .masonry{gap:.67cqw}.masonry>div{gap:.67cqw}
+  .c-exhibitions .tile{gap:.33cqw}
+  .c-exhibitions .tile span{display:block;font-size:max(9.5px,.875cqw)}
+  .c-museums .places{display:flex;flex-direction:column;gap:.67cqw;margin-bottom:1.15cqw;font-size:max(13px,1.5cqw);line-height:1.1;font-weight:500;letter-spacing:-.01em}
+  html[data-lang="zh"] .c-museums .places{font-size:max(13px,1.33cqw);line-height:1.35;letter-spacing:0}
+  .c-museums .slogan{margin-top:.83cqw}
+}
+
+/* ---------- shared bits used in rooms ---------- */
+.meta{font-size:var(--s-small);color:var(--ink-soft);line-height:1.5;margin:0}
+.figures{display:flex;flex-wrap:wrap;gap:8px 28px;margin:0;padding:0;list-style:none}
+.figures li{display:flex;flex-direction:column;font-size:var(--s-small);color:var(--ink-soft)}
+.figures b{font-size:clamp(26px,2.4vw,34px);font-weight:500;color:var(--ink);line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.more{align-self:flex-start;font-weight:500;text-decoration:none;border-bottom:1.5px solid var(--ink);padding-bottom:2px}
+.more:hover{border-color:transparent}
+
+.index{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink);scroll-margin-top:80px}
+.index a{display:grid;grid-template-columns:4.6em 1fr;gap:2px 12px;padding:11px 0;border-bottom:1px solid var(--rule);text-decoration:none;align-items:baseline}
+.index a:hover .t{text-decoration:underline;text-underline-offset:3px}
+.index .y{font-size:var(--s-small);font-variant-numeric:tabular-nums;color:var(--ink-soft)}
+.index .t{font-weight:500;line-height:1.3}
+.index .r{grid-column:2;font-size:var(--s-small);color:var(--ink-soft);line-height:1.4}
+
+/* photo slots */
+.ph{margin:0;position:relative;aspect-ratio:4/3;max-width:100%;background:var(--slot);overflow:hidden}
+.ph img{display:block;width:100%;height:100%;object-fit:cover;object-position:var(--pos,50% 50%)}
+.ph.portrait{aspect-ratio:3/4}
+.ph.full.loaded{aspect-ratio:auto;background:none}
+.ph.full:not(.loaded){aspect-ratio:3/4}
+.ph.full img{height:auto;object-fit:contain}
+.ph .slot{position:absolute;inset:0;display:flex;align-items:flex-end;padding:10px;font:12px/1.3 var(--mono);color:var(--ink-soft);border:1px dashed #b9b9b6}
+.ph.loaded .slot{display:none}
+
+/* ---------- rooms: a white sheet on the wall ---------- */
+.room{position:relative;z-index:2;display:none;min-height:100vh;min-height:100svh;padding:calc(64px + env(safe-area-inset-top,0px)) 12px 48px}
+.room.open{display:block}
+
+/* ---------- motion (after atlason.com): a column zooms out into its page; pages slide up over each other ---------- */
+:root{--ease-in:cubic-bezier(.54,.15,.15,1);--ease-out:cubic-bezier(.85,0,.45,.85)}
+body{transition:background-color 1s var(--ease-in)}
+body.is-busy main.home,body.is-busy .room{pointer-events:none}
+.zoom{position:fixed;z-index:30;background:var(--paper);overflow:hidden;pointer-events:none;will-change:left,top,width,height}
+.zoom-title{position:absolute;left:0;top:0;margin:0;font-weight:500;white-space:nowrap;transform-origin:0 0;will-change:transform}
+.room.measure{display:block!important;visibility:hidden!important;position:absolute!important;top:0;left:0;right:0}
+.room.enter .room-inner>*:not(header){animation:fade-up .7s var(--ease-in) both}
+.room.enter .room-inner>*:nth-child(2){animation-delay:.06s}
+.room.enter .room-inner>*:nth-child(3){animation-delay:.12s}
+.room.enter .room-inner>*:nth-child(n+4){animation-delay:.18s}
+.room.enter .room-lead{animation:fade-up .7s var(--ease-in) both}
+@keyframes fade-up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.room.slide-in{z-index:5;background:var(--wall-now,var(--wall));animation:to-top 1s var(--ease-in) both}
+.room.leaving{display:block!important;position:fixed!important;left:0;right:0;z-index:1;animation:dim 1s var(--ease-in) both}
+@keyframes to-top{from{transform:translateY(100vh)}to{transform:none}}
+@keyframes dim{to{opacity:.35}}
+.band.load .col{animation:fade-up .9s var(--ease-in) both}
+.band.load .col:nth-child(2){animation-delay:.08s}.band.load .col:nth-child(3){animation-delay:.16s}.band.load .col:nth-child(4){animation-delay:.24s}
+@media (prefers-reduced-motion:reduce){
+  body,.col-in,.home-link{transition:none!important}
+  .room.enter .room-inner>*,.room.slide-in,.room.leaving,.band.load .col{animation:none!important}
+}
+.room-inner{max-width:1200px;margin:0 auto;background:var(--paper);padding:18px 16px 28px;display:flex;flex-direction:column;gap:48px}
+.room-title{margin:0;font-size:var(--s-title);font-weight:500;letter-spacing:-.023em;line-height:1}
+html[data-lang="zh"] .room-title{font-size:calc(var(--s-title) * .78);letter-spacing:0;line-height:1.15}
+.room-lead{margin:12px 0 0;max-width:40em;color:var(--ink-soft)}
+
+.entry{display:grid;grid-template-columns:1fr;gap:22px;border-top:1px solid var(--ink);padding-top:20px;scroll-margin-top:80px}
+.split{display:grid;grid-template-columns:1fr;gap:22px;min-width:0}
+.split>.head{display:flex;flex-direction:column;gap:16px;min-width:0}
+.entry h3{margin:0;font-size:var(--s-h2);font-weight:500;letter-spacing:-.018em;line-height:1.1;text-wrap:balance}
+html[data-lang="zh"] .entry h3{letter-spacing:0;line-height:1.3}
+.entry h3 .sub{display:block;font-size:max(14px,.55em);font-weight:400;letter-spacing:0;color:var(--ink-soft);margin-top:8px;line-height:1.35}
+.label{margin:0;display:grid;grid-template-columns:5.5em 1fr;gap:6px 14px;font-size:14px;line-height:1.5}
+html[data-lang="en"] .label{grid-template-columns:6.5em 1fr}
+.label dt{color:var(--ink-soft)}
+.label dd{margin:0;min-width:0;font-variant-numeric:tabular-nums}
+.body{min-width:0;display:flex;flex-direction:column;gap:18px;max-width:44em}
+.body p{margin:0}
+.body b{font-weight:600}
+.body ul,.body ol{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:8px}
+.body h4{margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--ink-soft)}
+.body h4+*{margin-top:-8px}
+.pending{color:var(--ink-soft);font-size:14px}
+.gallery{columns:2;column-gap:8px}
+.gitem{display:inline-block;width:100%;vertical-align:top;break-inside:avoid;-webkit-column-break-inside:avoid;margin-bottom:8px;text-decoration:none;cursor:zoom-in}
+.gitem .gcap{display:block;margin-top:5px}
+/* 1–3 photos: side by side in a row instead of stacked columns */
+.gallery.few{columns:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;align-items:start}
+.gallery.few .gitem{margin-bottom:0}
+@media (min-width:700px){.gallery.few{grid-template-columns:repeat(max(var(--n),2),minmax(0,1fr));gap:12px}}
+.gitem .ph{transition:opacity .3s}
+@media (hover:hover){.gitem:hover .ph{opacity:.88}}
+.gcap{font-size:12px;line-height:1.4;color:var(--ink-soft);padding-bottom:2px}
+
+.principles{list-style:none;padding:0!important;counter-reset:p;gap:16px!important}
+.principles li{counter-increment:p;display:grid;grid-template-columns:2em 1fr;gap:4px}
+.principles li::before{content:counter(p);font-weight:500}
+.principles b{display:block}
+
+.methods{width:100%;border-collapse:collapse;font-size:15px;min-width:520px}
+.methods th,.methods td{text-align:left;vertical-align:top;padding:10px 12px 10px 0;border-bottom:1px solid var(--rule)}
+.methods th{font-size:var(--s-small);color:var(--ink-soft);font-weight:400;border-bottom:1px solid var(--ink)}
+.methods b{font-weight:500}
+.scroll{overflow-x:auto;max-width:100%}
+.findings{list-style:none;padding:0!important;gap:20px!important}
+.findings li{display:grid;grid-template-columns:2em 1fr;gap:4px 8px}
+.findings .n{font-size:var(--s-h3);font-weight:500;line-height:1.25}
+.findings b{display:block;font-size:var(--s-h3);font-weight:500!important;line-height:1.25;letter-spacing:-.01em;margin-bottom:4px}
+.themes{list-style:none;padding:0!important;gap:28px!important}
+.themes>li{display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--rule);padding-top:14px}
+.themes>li:first-child{border-top:0;padding-top:0}
+.theme-t{margin:0;font-size:var(--s-h3);font-weight:500;line-height:1.25;letter-spacing:-.01em}
+.theme-t .n{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px;font-weight:500}
+.themes ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px}
+.site-photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 8px;align-items:start}
+.site-photos figure:first-child{grid-row:span 2}
+.site-photos figure{margin:0;display:flex;flex-direction:column;gap:6px}
+.site-photos figcaption{font-size:12px;color:var(--ink-soft);line-height:1.4}
+.big-idea{border-top:1px solid var(--ink);padding-top:18px;display:flex;flex-direction:column;gap:12px}
+.big-idea p:last-child{margin:0;font-size:clamp(24px,2.8vw,40px);line-height:1.15;font-weight:500;letter-spacing:-.02em;max-width:24em;text-wrap:balance}
+html[data-lang="zh"] .big-idea p:last-child{white-space:pre-line;font-size:clamp(20px,2.2vw,32px);line-height:1.45;letter-spacing:0}
+.voices{list-style:none;padding:0!important}
+
+/* ---------- lightbox: tap a photo in Exhibitions or Museums to see it large ---------- */
+.lb{position:fixed;inset:0;z-index:40;display:grid;grid-template-rows:auto 1fr;background:var(--wall-now,var(--wall));
+  padding:calc(12px + env(safe-area-inset-top,0px)) 16px calc(16px + env(safe-area-inset-bottom,0px))}
+.lb-top{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:36px}
+.lb-count{font-size:13px;color:var(--ink);background:var(--paper);padding:10px 14px;line-height:1}
+.lb-stage{position:relative;min-height:0;display:flex;align-items:center;justify-content:center;padding:14px 0 0}
+.lb-fig{margin:0;display:flex;flex-direction:column;align-items:center;gap:10px;max-width:100%;max-height:100%;min-height:0}
+.lb-img{display:block;max-width:min(100%,1400px);max-height:calc(100svh - 150px);width:auto;height:auto;object-fit:contain;background:var(--paper);transform-origin:0 0;user-select:none;-webkit-user-drag:none}
+.lb-cap{font-size:13px;line-height:1.45;color:var(--ink);text-align:center;max-width:40em;min-height:1.45em}
+.lb-cap .t{color:var(--ink-soft)}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border:0;background:var(--paper);color:var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.lb-nav:hover{background:var(--ink);color:var(--paper)}
+.lb-prev{left:0}.lb-next{right:0}
+.lb-nav svg{width:22px;height:16px}
+.lb.single .lb-nav{display:none}
+@media (max-width:699px){.lb-nav{top:auto;bottom:0;transform:none;width:44px;height:44px}.lb-img{max-height:calc(100svh - 190px)}.lb-fig{padding-bottom:52px}}
+@media (min-width:700px){.lb{padding-left:24px;padding-right:24px}.lb-stage{padding:14px 64px 0}}
+.voices li{border-left:2px solid var(--ink);padding-left:14px}
+.big-quote{font-size:var(--s-h2);line-height:1.2;font-weight:500;letter-spacing:-.015em;margin:0;max-width:22em;text-wrap:balance}
+html[data-lang="zh"] .big-quote{font-size:calc(var(--s-h2) * .85);line-height:1.5;letter-spacing:0}
+.room-nav{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--ink);padding-top:18px}
+.room-nav a{font-weight:500;text-decoration:none;font-size:clamp(18px,1.7vw,24px);letter-spacing:-.015em}
+.room-nav a:hover{text-decoration:underline;text-underline-offset:4px}
+.about-photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;align-items:start}
+.contact dd a{word-break:break-all}
+.colophon{margin:-28px 0 0;font-size:11px;line-height:1.5;color:#9a9a93;font-weight:400}
+
+@media (min-width:700px){
+  .room{padding-left:24px;padding-right:24px}
+  .room-inner{padding:24px 28px 36px;gap:56px}
+  .gallery{columns:3}
+  .bar{padding-left:24px;padding-right:24px}
+}
+@media (min-width:1100px){
+  .room{padding:96px 48px 72px}
+  .room-inner{padding:28px 40px 44px}
+  .split{grid-template-columns:minmax(0,4fr) minmax(0,7fr);column-gap:48px}
+  .split>.head{grid-column:1;position:sticky;top:84px;align-self:start;gap:18px}
+  .split>.body{grid-column:2}
+  .gallery{column-gap:12px}
+  .gitem{margin-bottom:12px}
+  .bar{padding-left:32px;padding-right:32px}
+}
+</style>
+</head>
+<body>
+
+<div class="bg" id="bg" aria-hidden="true"></div>
+<div class="bg-note" id="bgNote" hidden>background.jpg</div>
+
+<header class="bar">
+  <a class="chip home-link" href="#"><span class="zh">← 首页</span><span class="en">← Home</span></a>
+  <button class="chip lang" id="langBtn" type="button" aria-label="切换语言 / Switch language"><b data-l="zh">中</b><span>/</span><b data-l="en">EN</b></button>
+</header>
+
+<main class="home" id="home"></main>
+<div id="rooms"></div>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Photo">
+  <div class="lb-top"><span class="lb-count" id="lbCount"></span><button class="chip" type="button" id="lbClose"><span class="zh">关闭</span><span class="en">Close</span></button></div>
+  <div class="lb-stage">
+    <figure class="lb-fig"><img class="lb-img" id="lbImg" alt=""><figcaption class="lb-cap" id="lbCap"></figcaption></figure>
+    <button class="lb-nav lb-prev" type="button" id="lbPrev" aria-label="Previous photo"><svg viewBox="0 0 44 32" aria-hidden="true"><path d="M42 16H4M18 2 4 16l14 14" fill="none" stroke="currentColor" stroke-width="3.4"/></svg></button>
+    <button class="lb-nav lb-next" type="button" id="lbNext" aria-label="Next photo"><svg viewBox="0 0 44 32" aria-hidden="true"><path d="M2 16h38M26 2l14 14-14 14" fill="none" stroke="currentColor" stroke-width="3.4"/></svg></button>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   设置 SETTINGS
+   SHOW_SLOTS = true：没有照片的位置显示灰色占位框和文件名（制作阶段用）
+   上线前改成 false：没有照片的位置会自动隐藏
+   ============================================================ */
+const SHOW_SLOTS = false;
+const IMG = "images/";
+/* 这些照片完整显示、不裁剪 / shown whole, never cropped */
+/* 照片说明（展览、实习页的照片下方和放大查看时显示）[中文, English] */
+const CAPTIONS = {
+  "bookmarks-01":["展览全貌","Installation view"],
+  "bookmarks-02":["手工阐释档案《Books, Marks, Archives》","The handmade interpretive archive, Books, Marks, Archives"],
+  "bookmarks-03":["精选具有代表性的 8 本书","Eight representative books chosen for display"],
+  "bookmarks-06":["手工阐释档案《Books, Marks, Archives》部分内页","Pages from the handmade archive, Books, Marks, Archives"],
+  "bookmarks-09":["观众的互动留言","Visitors' responses"],
+  "bookmarks-10":["展览宣传海报","Exhibition poster"],
+  "gm-01":["主入口进门左侧","Just inside the main entrance, on the left"],
+  "gm-02":["The Garden Challenge 实体手册","The Garden Challenge, printed"],
+  "gm-03":["The Garden Challenge 内页","Inside The Garden Challenge"],
+  "gm-04":["切尔西花展讲座：石原和幸（Kazuyuki Ishihara），2026年5月20日","Chelsea Flower Show Lecture: Kazuyuki Ishihara, 20 May 2026"],
+  "gm-05":["Tuesday Tots 幼儿活动","Tuesday Tots"],
+  "gm-06":["Sunday Family Session 周日家庭活动","Sunday Family Session"],
+  "gm-07":["British Flower Week Late 夜场活动","British Flower Week Late"],
+  "gm-08":["休闲与活动空间","Leisure and activity space"],
+  "gm-09":["Sunday Family Session 周日家庭活动","Sunday Family Session"]
+};
+/* 列表小图的裁剪（放大查看时仍显示完整照片）：ar = 宽高比，pos = 保留的位置 */
+const CROP = {"saatchi-02":{ar:"7/8", pos:"50% 100%"}, "gm-10":{ar:"4/3", pos:"50% 60%"}};
+const FULL = ["bookmarks-01","about-01","about-03","bookmarks-10","gm-01","gm-03","gm-10","ldf2026-01","ldf2026-06","saatchi-02","thecross-01"];
+
+/* ============================================================
+   内容 CONTENT — 改文字只需改这里。[中文, English]
+   ============================================================ */
+const C = {
+  name:["王裔天","Yitian Wang"], nameSub:["Tina","Tina"],
+  tagline:["先听见人在空间里的感受，再让空间作出回应。","I listen to how people feel in a space, then help the space respond."],
+  subline:["观众研究 × 展览实践 · 伦敦 / 上海","Audience research × exhibition practice · London / Shanghai"],
+  /* 「关于」页最底下的灰色小字 */
+  colophon:["网站版式参考 Atlason 工作室官网 · 英文字体 Hanken Grotesk（SIL OFL）","Layout after the Atlason studio website · Type: Hanken Grotesk (SIL OFL)"],
+  home:{
+    /* 首页「展览」栏的小图：照片、跳转到哪个展览、说明文字；ar = 电脑端宽高比，arm = 手机端宽高比；d:true = 只在电脑端显示 */
+    tiles:[
+      {img:"ldf2026-08", id:"threshold", ar:1.38, arm:1.94, cap:["Threshold，伦敦设计节 2026","Threshold, London Design Festival 2026"]},
+      {img:"bookmarks-03", id:"bookmarks", ar:1.03, arm:1.44, cap:["Book Marks，UCL Monitor 画廊","Book Marks, UCL Monitor Gallery"]},
+      {img:"yumeng-01", id:"pegasus", ar:.76, d:true, cap:["驭梦，Stokey 画廊","Pegasus Dreams, Stokey Gallery"]},
+      {img:"saatchi-01", id:"artevol", ar:.8, arm:1.2, pos:"45% 50%", cap:["ArtEvol，萨奇画廊","ArtEvol, Saatchi Gallery"]},
+      {img:"ldf2025-01", id:"52hz", ar:1.38, arm:1.94, cap:["52Hz Echo，伦敦设计节 2025","52Hz Echo, London Design Festival 2025"]},
+      {img:"ldf2026-07", id:"threshold", ar:.96, d:true, cap:["Threshold，影像作品","Threshold, moving image"]}
+    ],
+    places:[["伦敦花园博物馆","Garden Museum, London"],["上海工业博物馆筹备组","Shanghai Industrial Museum"]],
+    museumsLine:["从馆内，理解学习。","Learning, from the inside."]
+  },
+  sections:{
+    research:["研究","Research"], exhibitions:["展览","Exhibitions"], museums:["实习","Museums"],
+    other:["其他","Elsewhere"], about:["关于","About"]
+  },
+  research:{
+    eyebrow:["MA 论文 · UCL · 2026","MA dissertation · UCL · 2026"],
+    title:["感受博物馆氛围：花园博物馆的观众舒适、欢迎、参与与距离","Experiencing Museum Atmosphere: Visitor Comfort, Welcome, Engagement and Distance at the Garden Museum"],
+    hook:["一位观众差点因为门口的带包须知没进去，参观完却说这里很棒。","One visitor nearly turned back at a bag notice, then called the visit wonderful."],
+    point:["观众说「整体很满意」，不代表过程中没有卡点。","A visitor who loved the visit may still have hit sticking points along the way."],
+    figures:[["10",["次访谈","interviews"]],["3",["次观察","observations"]],["5",["小时现场","hours on site"]]],
+    question:["观众常用「安静」「平和」来形容花园博物馆，好像氛围是房间自带的。可同一个房间，有人觉得放松，有人觉得压抑。我想知道：观众实际怎样体验花园博物馆？空间、感官、阐释、人际和制度条件，如何影响他们是否自在、是否被欢迎、是否参与、什么时候产生距离？",
+      "Visitors often describe the Garden Museum as calm or peaceful, as if the atmosphere belonged to the space. Yet the same room can feel restful to one visitor and oppressive to another. I asked how visitors actually experienced the Garden Museum, and how spatial, sensory, interpretive, social and institutional conditions shaped their comfort, welcome, engagement and distance."],
+    methods:[
+      [["半结构化访谈","Semi-structured interviews"],["10 位成年观众，每次约 6–13 分钟；其中 1 场为中文访谈","10 adult visitors, about 6–13 minutes each; one interview in Chinese"],["主要证据：观众自己讲述的体验","Primary evidence: visitors' own accounts"]],
+      [["非介入式观察","Non-intrusive observation"],["3 次，共 5 小时（2026年6月22、23、28日）","3 sessions, 5 hours in total (22, 23 and 28 June 2026)"],["记录动线、停留、犹豫和环境条件","Movement, pauses, hesitation and conditions"]],
+      [["材料分析","Material analysis"],["地图、标识、展签、动线、座椅、电梯流程、临展场景","Maps, signs, labels, routes, seating, lift procedure, exhibition set"],["确认博物馆提供了什么、要求了什么","What the museum offered and asked of visitors"]]
+    ],
+    analysis:["分析方法：人工反思性主题分析（reflexive thematic analysis）。","Analysis: reflexive thematic analysis, done by hand."],
+    craft:[
+      [["迭代访谈提纲","Iterating the interview guide"],["前 4 场试访发现，直接问「你觉得这里氛围如何」只能得到笼统评价，还会把我的用词塞给受访者。之后改为从参观动机和路线问起，追问具体时刻。","The first four pilot interviews showed that asking about “atmosphere” produced vague verdicts and planted my vocabulary. I revised the guide to start with motive and route, then probe specific moments."]],
+      [["把观察与推测分开","Separating what I saw from what I assumed"],["复核全部观察笔记，将「观众停下」和「观众感兴趣」分开标注；没有访谈佐证的推断全部删除或弱化。","I audited every fieldnote to separate observed behaviour from inference, and cut claims that interviews did not support."]],
+      [["保留反例","Keeping the counter-examples"],["矛盾的说法不取平均，反而用来修正结论的边界。","Contradictory accounts were kept, not averaged, and used to test the limits of each claim."]]
+    ],
+    /* 核心发现：[标题, [要点…]]。首页「研究」栏只显示标题 */
+    findings:[
+      [["不均衡的氛围","Uneven atmosphere"],[
+        ["氛围由光线、声音、温度、历史建筑、策展布景，以及在不同区域间的走动共同形成。","Atmosphere comes from light, sound, temperature, the historic building, exhibition design, and moving from one area to another."],
+        ["同样的条件，对不同的人效果不同：自然光给画作增添了色彩，却也让一位观众被反光困扰；楼上播放的唱片让一位观众匆匆离开，而临展中的鸟鸣让另一位观众沉浸其中。","The same conditions affect people differently. Sunlight added colour to the paintings but caused glare for one visitor. Music playing upstairs made one visitor hurry out, while birdsong in the exhibition drew another one in."],
+        ["历史建筑带来的氛围和策展布置出的氛围，不是“真实”与“人造”的对立，两者都可能帮助参观，也可能造成阻碍。","The atmosphere of the historic building and the designed exhibition atmosphere aren't “real” versus “fake”. Either can help a visit or get in the way."]]],
+      [["被允许停留","Permission to linger"],[
+        ["观众是否舒适、是否投入，取决于能否自己调节节奏、姿势、注意力和参与方式。","Whether visitors feel comfortable and engaged depends on whether they can set their own pace, posture, focus and way of taking part."],
+        ["座椅、安静角落、休息点和互动设施分布并不均匀。","Seating, quiet corners, rest spots and hands-on activities are unevenly spread around the museum."],
+        ["挑着看，在有其他选择时是自主的；但如果是因为缺少说明或环境太吵才跳过，就成了被迫。","Picking what to look at is a free choice when there are other options. When people skip things because information is missing or the noise is too much, it isn't a choice at all."]]],
+      [["找到进入的路径","Finding a way in"],[
+        ["“欢迎”分散在员工、标识、展签、服务和规则等许多环节中，有的环节做到了，有的没有。","Welcome is spread across many things: staff, signs, labels, services and rules. Some of these work and some don't."],
+        ["例如：员工很友好，工作坊却只对家庭开放；整体路线好找，楼梯却没有标识；展签易读，整体主题却不清晰；包袋告示差点让一位观众掉头离开；咖啡馆只能线上预订。","Examples: friendly staff, but a workshop only for families; an easy route overall, but an unsigned staircase; readable labels, but an unclear overall theme; a bag notice that nearly made one visitor turn back; and a café you can only book online."],
+        ["很多问题由员工当场化解，但这只是把负担转给了员工，问题本身还在。","Staff often fix problems on the spot, but that moves the burden onto them rather than solving the problem."]]]
+    ],
+    synthesis:[
+      ["氛围不是博物馆固定拥有的品质，也不等于满意度，而是决定观众“能不能真正参与”的条件之一。","Atmosphere isn't a fixed quality the museum has, and it isn't the same as satisfaction. It's one of the conditions that decide whether visitors can really take part."],
+      ["观众自身带来的东西——知识、语言、上网习惯、同伴、感官需求、参观目的和时间——决定了每个环节对他们来说有多费力，以及遇到问题时能不能被解决。","What visitors bring with them — knowledge, language, digital habits, companions, sensory needs, purpose and time — decides how much effort each part of the visit takes, and whether problems get solved."],
+      ["研究区分了三组常被混为一谈的东西：环境条件不等于实际效果，提供了设施不等于观众用得上，进得了门不等于被真正欢迎。","The study separates three pairs that are often treated as one thing: conditions vs actual effects, offering something vs visitors being able to use it, and getting in vs truly feeling welcome."]
+    ],
+    /* 建议：实践层面 [要点标题, 说明]；研究层面为一句话 */
+    recs:[
+      [["别只问整体满意度，要问具体时刻","Don't just ask about overall satisfaction"],["这样才能找到问题出在哪里、为什么出现。","Ask about specific moments, so you can see where and why problems happen."]],
+      [["增加一种服务不等于更容易参与","Adding a service doesn't automatically make the museum easier to use"],["关键是观众能不能找到、能不能自己用、它是不是一直可用。可选的二维码让观众多了一种获取信息的方式，而强制线上预订让不习惯上网的人用不了咖啡馆。","What matters is whether people can find it, use it on their own, and rely on it working. Optional QR codes gave visitors another way to get information, while compulsory online booking kept people who don't book online out of the café."]],
+      [["员工帮忙解决了问题，不代表设施本身没问题","A problem staff fixed doesn't mean the setup works"],["因为这需要观众注意到员工、愿意开口，并且得到回应。","A fix only happens if visitors notice staff, are willing to ask, and get an answer."]]
+    ],
+    future:[
+      ["针对本研究没有覆盖的群体（尤其是残障观众）再做研究。","Repeat the study with groups this one didn't reach, especially disabled visitors."],
+      ["在不同博物馆之间比较，看同样的环境条件在不同机构中会不会产生不同效果。","Compare different museums to see whether the same conditions work differently in different places."]
+    ],
+    bigIdea:["不要只问一座博物馆“氛围好不好”，\n而要问：它对谁友好？又让谁更费力？","Don't just ask whether a museum “has a good atmosphere”. Ask who it welcomes, and who it makes work harder."],
+    site:["https://www.gardenmuseum.org.uk/",["花园博物馆官网","Garden Museum website"]],
+    /* 研究现场照片：[文件名, 说明] */
+    sitePhotos:[["gm-01",["主入口进门左侧","Just inside the main entrance, on the left"]],["gm-04",["切尔西花展讲座：石原和幸（Kazuyuki Ishihara），2026年5月20日","Chelsea Flower Show Lecture: Kazuyuki Ishihara, 20 May 2026"]],["gm-08",["休闲与活动空间","Leisure and activity space"]]],
+    voices:[
+      ["一位观众觉得楼梯口应该更有引导性：没有任何标识告诉你楼上还有展览。","One visitor felt the staircase could be more inviting: nothing told you there were exhibits upstairs."],
+      ["一位观众说，不觉得必须把每件展品都看完，只看自己想看的，也觉得足够了。","One visitor said they didn't feel they had to see everything; looking only at what interested them felt like enough."],
+      ["一位没带孩子的观众发现工作坊只面向家庭，那一刻有点被排除在外，但又说这不算什么大事。","An adult visiting without children found a workshop was for families only and felt slightly left out, though they said it was no big deal."],
+      ["一位用中文受访的观众说，一推开临展的门就感到凉爽，还有鸟鸣背景音，像走进了森林，很舒服。","A visitor interviewed in Chinese said that opening the door to the temporary exhibition brought cool air and birdsong, like stepping into a forest."]
+    ],
+    voicesNote:["以上均为匿名转述。","All accounts are anonymised paraphrases."]
+  },
+  exhibitions:[
+    { id:"threshold", year:"2026", title:["Threshold","Threshold"], short:["策展人与现场执行经理","Curator and On-site Production Manager"],
+      sub:["Aurora Art · 伦敦设计节 2026","Aurora Art · London Design Festival 2026"],
+      label:[
+        [["时间","When"],["2026年9月，展期 2 天","September 2026, 2 days"]],
+        [["地点","Where"],["St Mary's Hornsey Rise, Ashley Road, London N19 3AD","St Mary's Hornsey Rise, Ashley Road, London N19 3AD"]],
+        [["角色","Role"],["策展人与现场执行经理","Curator and On-site Production Manager"]],
+        [["规模","Scale"],["30 件作品 · 10 名志愿者 · 约 100 位观众","30 works · 10 volunteers · c. 100 visitors"]]
+      ],
+      points:[
+        ["统筹展览从前期准备到撤展的全过程，把 30 件作品、设备、场地、人员和时间整合成一套可落地的方案。","Led Threshold from pre-production to de-install, bringing 30 works, AV, venue, people and schedule into one workable plan."],
+        ["确认作品尺寸与安装需求，剪辑影像作品，按场地条件规划电源、屏幕和播放方式；安排 10 名志愿者的排班与分工。","Confirmed dimensions and install needs, edited moving-image works, and specified power, screens and playback; briefed and scheduled a team of 10 volunteers."],
+        ["现场应变：作品实际尺寸与示意图不符时，重新安排任务顺序；活动中播放设备故障，导出无音频版本，保证影像作品持续展示。","Solved problems on the day: resequenced the install when a work arrived at unplanned dimensions, and exported a silent version of a video to keep it showing when playback failed."]
+      ],
+      extra:[["展后复盘","Post-show review"],["展览结束后，收集观众、艺术家和志愿者的反馈与感受，记录整理并提炼出下一次可以改进的目标。","After the show, I gathered feedback from visitors, artists and volunteers, documented it, and turned it into concrete goals for next time."]],
+      links:[["https://londondesignfestival.com/activities/threshold",["伦敦设计节官网页面","London Design Festival listing"]]],
+      press:null, pressPending:true,
+      photos:["ldf2026-01","ldf2026-02","ldf2026-03","ldf2026-04","ldf2026-05","ldf2026-06","ldf2026-07","ldf2026-08","ldf2026-09","ldf2026-10"] },
+    { id:"52hz", year:"2025", title:["52Hz Echo","52Hz Echo"], short:["联合策展人与运营助理","Co-curator and Operations Assistant"],
+      sub:["Aurora Art · 伦敦设计节 2025","Aurora Art · London Design Festival 2025"],
+      label:[
+        [["时间","When"],["2025年9月13–21日","13–21 September 2025"]],
+        [["地点","Where"],["Gallery House, 50 Baker Street, London W1U 7BT","Gallery House, 50 Baker Street, London W1U 7BT"]],
+        [["角色","Role"],["联合策展人与运营助理","Co-curator and Operations Assistant"]]
+      ],
+      points:[
+        ["协助作品选择与摆放，适配兼具画廊与商业社交功能的空间；撰写双语展签与导览材料。","Assisted with work selection and placement for a hybrid gallery-commercial venue, and wrote bilingual wall texts and tour materials."],
+        ["一年后受同一公司邀请，担任《Threshold》策展人。","A year later, the same company invited me back to curate Threshold."]
+      ],
+      press:["https://caijing.chinadaily.com.cn/a/202511/06/WS690c3b7da310c4deea5f059c.html",["中国日报网财经频道报道","China Daily (Chinese edition) feature"]],
+      links:[["https://www.auroraartfashion.com/london-design-festival-2/",["Aurora Art & Fashion 展览页面","Aurora Art & Fashion exhibition page"]]],
+      photos:["ldf2025-01","ldf2025-02"] },
+    { id:"bookmarks", year:"2026", title:["Book Marks","Book Marks"], short:["小组策展，负责手工阐释档案","Group curator, interpretive archive"],
+      sub:["UCL 200 小组策展项目 · UCL Monitor Gallery","UCL 200 group exhibition · UCL Monitor Gallery"],
+      label:[
+        [["时间","When"],["2026年","2026"]],
+        [["地点","Where"],["UCL Monitor Gallery","UCL Monitor Gallery"]],
+        [["角色","Role"],["小组策展成员，主要负责手工阐释档案《Books, Marks, Archives》及其三段式展品文本","Group curator; led the handmade interpretive archive Books, Marks, Archives and its three-part object texts"]],
+        [["规模","Scale"],["初筛约 80 册图书 · 展出 8 本书 · 2 本手工档案书 · 9 类痕迹","c. 80 books surveyed · 8 books shown · 2 handmade archive books · 9 kinds of trace"]]
+      ],
+      intro:["《Book Marks》不讲 UCL 的官方里程碑，而是去看 IOE 图书馆流通书籍里留下的细小痕迹：批注、污渍、夹页、涂鸦、便利贴、破损的书脊。我们相信，这些被忽视的痕迹同样记录着学习如何在这所大学里被一代代人延续。","Book Marks told UCL's history not through official milestones but through the small traces left in the IOE Library's circulating books: notes, stains, inserts, doodles, sticky tabs and broken bindings. We wanted to show that these overlooked marks are also evidence of how learning has been carried on, together, over generations."],
+      principles:[
+        [["按痕迹分类，而非按书目分类","Organised by trace, not by subject"],["档案把痕迹分为九类：Annotated、Marked、Conversing、Drawn-in、Stained、Studied、Tagged、Textured、Worn。它问的不是书里写了什么，而是书被怎样使用过。","The archive sorted traces into nine categories, from Annotated to Worn. It asked not what the books contained, but how they had been used."]],
+        [["三段式文本","A three-part text for every trace"],["每条痕迹配一段「想象场景」、一段「客观描述」和一句「入选理由」。痕迹本身沉默而模糊，一块污渍不会自己说话。想象场景给出一个进入的可能，客观描述把读者带回可见的证据，入选理由说明它为何重要。","Each entry paired an imagined scene with an objective description and a short reason for selection. A stain cannot speak for itself: the scene offers a way in, the description returns the reader to what can be seen, and the reason says why it matters."]],
+        [["手工书的形式","The archive as a handmade book"],["档案页面逐页打印、裁剪、粘贴，观众通过翻页来阅读，而翻页正是展览所研究的动作。观众可以上手翻阅档案书，原书则得到保护。","Every page was printed, cut and pasted by hand, so visitors read the archive by turning pages, the very act the exhibition studied. They could handle the archive while the original books stayed protected."]],
+        [["展陈与引导","Display that teaches how to look"],["壁挂书架营造图书馆的氛围；一张「图书馆须知」提示观众留意页边、夹页和磨损；一本空白留言本邀请观众留下回应。","Wall-mounted shelves evoked a library; a Library Notice told visitors to look at margins, inserts and wear; a blank notebook invited their responses."]]
+      ],
+      extra:[["反思","Reflection"],["留言本只是有限的参与方式，观众无法改变档案的分类；我们也没有系统地评估观众学到了什么。下一步可以用 Generic Learning Outcomes 框架分析留言和观众反馈，检验展览的教育主张。","The notebook was a modest form of participation: visitors could respond but not reshape the archive. We also did not measure what visitors learned. Next time, the Generic Learning Outcomes framework could be used to analyse responses, so the exhibition's educational claims are tested rather than just asserted."]],
+      photos:["bookmarks-01","bookmarks-02","bookmarks-03","bookmarks-04","bookmarks-05","bookmarks-06","bookmarks-07","bookmarks-08","bookmarks-09","bookmarks-10"] },
+    { id:"pegasus", year:"2025", title:["驭梦","Pegasus Dreams"], short:["联合策展人","Co-curator"],
+      sub:["Aurora Art & Fashion · Stokey Gallery","Aurora Art & Fashion · Stokey Gallery"],
+      label:[
+        [["时间","When"],["2025年11月15–16日","15–16 November 2025"]],
+        [["地点","Where"],["伦敦 Stokey Gallery","Stokey Gallery, London"]],
+        [["角色","Role"],["策展人（与 Ning Guo 共同策展）","Co-curator, with Ning Guo"]],
+        [["规模","Scale"],["4 位艺术家，绘画、影像、装置等多种媒介","4 artists across painting, moving image and installation"]]
+      ],
+      points:[["负责布展与撤展，采购布展材料，并处理作品寄送相关事宜。","Installed and de-installed the show, sourced install materials, and handled the shipping of works."]],
+      press:["https://caijing.chinadaily.com.cn/a/202511/27/WS6927c8c3a310942cc49939ff.html",["中国日报网财经频道报道","China Daily (Chinese edition) feature"]],
+      photos:["yumeng-01"] },
+    { id:"witch", year:"2025", title:["They Call Me Witch","They Call Me Witch"], short:["展览助理与展监","Exhibition Assistant and Invigilator"],
+      sub:["独立策展项目 · Crypt Gallery","Independent curatorial project · Crypt Gallery"],
+      label:[
+        [["时间","When"],["2025年11月","November 2025"]],
+        [["地点","Where"],["伦敦 Crypt Gallery","Crypt Gallery, London"]],
+        [["角色","Role"],["展览助理与展监","Exhibition Assistant and Invigilator"]]
+      ],
+      points:[["负责前场工作：监展、观众入场管理、介绍作品，收集观众中英文双语反馈；执行每日展场检查，与策展人和艺术家沟通。","Ran front-of-house: invigilation, visitor access, introducing works and collecting bilingual visitor feedback, plus daily condition checks and liaison with the curator and artists."]],
+      extra:[["观众反馈","Visitor feedback"],["一位女士看得很仔细，她说这个展览给她带来了很多新的视角。","One visitor looked very closely at the works and told me the exhibition had given her many new perspectives."]],
+      link:["https://whichwitchcollective.com/they-call-me-witch",["展览页面","Exhibition page"]],
+      photos:[] },
+    { id:"myth", year:"2025", title:["Matriarchal Myth","Matriarchal Myth"], short:["策展助理（远程）","Curatorial Assistant (remote)"],
+      sub:["Aolab Experimental Gallery · 上海","Aolab Experimental Gallery · Shanghai"],
+      label:[
+        [["时间","When"],["2025年11月","November 2025"]],
+        [["地点","Where"],["上海 Aolab Experimental Gallery（远程参与）","Aolab Experimental Gallery, Shanghai (remote)"]],
+        [["角色","Role"],["策展助理（远程）","Curatorial Assistant (remote)"]]
+      ],
+      points:[["撰写社交媒体宣传文案；整理艺术家陈述与作品信息，核对标题、媒介、日期和图片版权。","Wrote social media copy, and edited artist statements and artwork information, checking titles, media, dates and image credits."]],
+      link:["https://whichwitchcollective.com/matriarchal-myth",["展览页面","Exhibition page"]],
+      photos:[] },
+    { id:"artevol", year:"2025–26", title:["ArtEvol","ArtEvol"], short:["志愿者 · London Art Collective (LAC)","Volunteer · London Art Collective (LAC)"],
+      sub:["London Art Collective (LAC) · Saatchi Gallery","London Art Collective (LAC) · Saatchi Gallery"],
+      label:[
+        [["主办","Organiser"],["London Art Collective (LAC)","London Art Collective (LAC)"]],
+        [["地点","Where"],["伦敦 Saatchi Gallery","Saatchi Gallery, London"]],
+        [["角色","Role"],["志愿者","Volunteer"]],
+        [["2026","2026"],["ArtEvol 2026: A View from Everywhere，10月3–11日（进行中）","ArtEvol 2026: A View from Everywhere, 3–11 October (ongoing)"]],
+        [["2025","2025"],["ArtEvol 2025: Voices from the Undefined；A. R. Turner: Energy，9月12–19日","ArtEvol 2025: Voices from the Undefined; A. R. Turner: Energy, 12–19 September"]]
+      ],
+      points:[["两次在 Saatchi Gallery 为 London Art Collective 的展览担任志愿者，支持观众导向的现场运营：接待观众、介绍作品、协助销售咨询。","Volunteered twice at Saatchi Gallery for London Art Collective exhibitions, supporting visitor-facing operations: welcoming visitors, introducing works and assisting with sales enquiries."]],
+      links:[
+        ["https://www.londonartcollective.com/artevol-2026",["ArtEvol 2026 官网","ArtEvol 2026"]],
+        ["https://www.londonartcollective.com/artevol-2025",["ArtEvol 2025 官网","ArtEvol 2025"]],
+        ["https://www.londonartcollective.com/whats-on/a-r-turner-energy-opens-successfully-at-saatchi-gallery",["A. R. Turner: Energy 官网","A. R. Turner: Energy"]]
+      ],
+      photos:["saatchi-02","saatchi-01"] }
+  ],
+  museums:[
+    { id:"garden", year:"2026", title:["花园博物馆","Garden Museum"], short:["学习与公共项目实习","Learning and Public Programmes Placement"],
+      sub:["伦敦 · 2026年4–7月","London · April–July 2026"],
+      label:[
+        [["时间","When"],["2026年4–7月","April–July 2026"]],
+        [["地点","Where"],["伦敦花园博物馆","Garden Museum, London"]],
+        [["职位","Role"],["学习与公共项目实习","Learning and Public Programmes Placement"]]
+      ],
+      points:[
+        ["参与面向儿童、家庭、学校、社区团体和青少年的课程与工作坊，按不同观众调整沟通方式和活动设计。","Supported sessions and workshops for children, families, schools, community groups and teenagers, adapting communication and activities to each audience."],
+        ["共同开发面向 12–16 岁青少年的自助参观手册《The Garden Challenge》，结合博物馆学习理论与青少年兴趣撰写文本，并使用 InDesign 完成视觉设计。","Co-developed The Garden Challenge, a self-guided trail for ages 12–16, shaping prompts and accessible text from learning theory and teenage interests, and designing it in InDesign."],
+        ["完整参与学习团队的工作流程：策划、资源准备、现场执行、观众互动。","Worked across the Learning team's full workflow, from planning and resource preparation to delivery and visitor engagement."]
+      ],
+      extra:[["一个收获","What I took away"],["同一个内容，讲给五岁孩子和讲给青少年是两件事。设计之前先想清楚「对谁说」。这段实习也让我找到了论文的研究场地。","The same content lands differently with a five-year-old and a fifteen-year-old, so design starts with who it is for. The placement also became the site of my dissertation research."]],
+      /* 顺序按电脑端三栏排好：左栏 02 03 07｜中栏 01 04 05｜右栏 08 06 09 10 */
+      photos:["gm-02","gm-03","gm-07","gm-01","gm-04","gm-05","gm-08","gm-06","gm-09","gm-10"] },
+    { id:"sim", year:"2024", title:["上海工业博物馆筹备组","Shanghai Industrial Museum Preparation Team"], short:["展览策划实习生","Exhibition Planning Intern"],
+      sub:["东浩兰生 · 上海 · 2024年6–8月","Donghao Lansheng · Shanghai · June–August 2024"],
+      label:[
+        [["时间","When"],["2024年6–8月","June–August 2024"]],
+        [["机构","Where"],["上海工业博物馆筹备组，东浩兰生","Shanghai Industrial Museum Preparation Team, Donghao Lansheng"]],
+        [["职位","Role"],["展陈研究部 展览策划实习生","Exhibition Planning Intern, Exhibition and Research Department"]]
+      ],
+      points:[
+        ["研究上海工业史，为展览早期策划提供资料支持。","Researched Shanghai's industrial history to support early-stage exhibition planning."],
+        ["熟悉展览前期策划的准备工作与流程。","Learned the groundwork that goes into developing an exhibition before design begins."],
+        ["制作 PPT、海报等材料，展示研究成果。","Presented research findings through slide decks and posters."]
+      ],
+      photos:[] }
+  ],
+  other:[
+    { id:"cross", year:"2024", title:["The Cross","The Cross"], short:["灯光助理与导演助理","Gaffer and Director's Assistant"],
+      sub:["UCL 学生短片","UCL student short film"],
+      label:[
+        [["时间","When"],["2024年10–12月","October–December 2024"]],
+        [["项目","Where"],["UCL Students' Union「电影导演入门」课程","An Introduction to Film Directing, UCL Students' Union"]],
+        [["角色","Role"],["灯光助理与导演助理","Gaffer and Director's Assistant"]],
+        [["荣誉","Honour"],["入选 Women X Film Festival UK Honours List","Honours List, Women X Film Festival UK"]]
+      ],
+      points:[["为两部短片规划灯光方案，管理器材租赁与拍摄排期；其中《The Cross》入选 Women X Film Festival UK Honours List。","Planned lighting set-ups and managed equipment hire and shoot scheduling for two short films; The Cross was selected for the Honours List at Women X Film Festival UK."]],
+      photos:["thecross-01"] }
+  ],
+  about:{
+    intro:["我是王裔天 Tina，本科和硕士都就读于伦敦大学学院：本科读政治学、社会学与东欧研究，硕士读博物馆与美术馆教育。社会科学的训练，是我做观众研究的基础。我工作于伦敦和上海之间，做过展览的统筹与现场执行，也在博物馆做过学习项目和观众研究。我的硕士论文通过访谈和观察，研究观众在博物馆里什么时候自在、什么时候卡住。我最感兴趣的问题是：同一个空间，为什么不同的人体验完全不同。",
+      "I'm Tina (Yitian Wang). I studied at University College London for both degrees: a BA in Politics, Sociology and Eastern European Studies, then an MA in Museums and Galleries in Education. My social science training is the foundation of my audience research. Working between London and Shanghai, I have led exhibition delivery on site, supported museum learning programmes, and carried out audience research. My MA dissertation used interviews and observation to study when visitors feel at ease in a museum, and when they get stuck. The question that drives my work: why does the same space feel so different to different people?"],
+    email:"chadanbainier@gmail.com",
+    linkedin:"https://www.linkedin.com/in/yitian-wang-858400280",
+    interview:null,
+    also:["2024 年在 UCL 学生短片《The Cross》中担任灯光助理与导演助理，该片入选 Women X Film Festival UK Honours List。","In 2024 I was gaffer and director's assistant on the UCL student film The Cross, selected for the Women X Film Festival UK Honours List."],
+    photos:["about-01","about-02","about-03"]
+  }
+};
+
+/* ============================================================
+   渲染 RENDERING — 一般不需要改
+   ============================================================ */
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const L = p => Array.isArray(p) ? (p[0]===p[1] ? esc(p[0]) : `<span class="zh">${esc(p[0])}</span><span class="en">${esc(p[1])}</span>`) : esc(p);
+const ARROW = `<svg class="arrow" viewBox="0 0 44 32" aria-hidden="true"><path d="M2 16h38M26 2l14 14-14 14" fill="none" stroke="currentColor" stroke-width="3.2"/></svg>`;
+const ph = (name, cls="", crop=null) => crop
+  ? `<figure class="ph ${cls}" style="aspect-ratio:${crop.ar};--pos:${crop.pos}" data-src="${IMG}${name}.jpg"><span class="slot">${name}.jpg</span></figure>`
+  : `<figure class="ph ${cls}${FULL.includes(name)?" full":""}" data-src="${IMG}${name}.jpg"><span class="slot">${name}.jpg</span></figure>`;
+const label = rows => `<dl class="label">${rows.map(r=>`<dt>${L(r[0])}</dt><dd>${L(r[1])}</dd>`).join("")}</dl>`;
+const ext = (url, text) => `<a class="more" href="${esc(url)}" target="_blank" rel="noopener">${L(text)} ↗</a>`;
+
+function entry(e){
+  let body = "";
+  if (e.intro) body += `<p>${L(e.intro)}</p>`;
+  if (e.points) body += e.points.length>1 ? `<ul>${e.points.map(p=>`<li>${L(p)}</li>`).join("")}</ul>` : `<p>${L(e.points[0])}</p>`;
+  if (e.principles) body += `<h4>${L(["设计理念","Design approach"])}</h4><ol class="principles">${e.principles.map(p=>`<li><span><b>${L(p[0])}</b>${L(p[1])}</span></li>`).join("")}</ol>`;
+  if (e.extra) body += `<h4>${L(e.extra[0])}</h4><p>${L(e.extra[1])}</p>`;
+  const links = [];
+  if (e.press) links.push(ext(e.press[0], e.press[1]));
+  if (e.link) links.push(ext(e.link[0], e.link[1]));
+  if (e.links) e.links.forEach(l=>links.push(ext(l[0], l[1])));
+  if (links.length) body += `<div style="display:flex;flex-wrap:wrap;gap:12px 24px">${links.join("")}</div>`;
+  if (e.pressPending && SHOW_SLOTS) body += `<p class="pending">${L(["媒体报道：即将发布","Press coverage: coming soon"])}</p>`;
+  const gallery = e.photos && e.photos.length ? `<div class="gallery${e.photos.length<=3?" few":""}" style="--n:${e.photos.length}" data-title="${esc(e.title[0])}|${esc(e.title[1])}">${e.photos.map(n=>`<a class="gitem" href="${IMG}${n}.jpg" data-name="${n}">${ph(n,"",CROP[n])}${CAPTIONS[n]?`<span class="gcap">${L(CAPTIONS[n])}</span>`:""}</a>`).join("")}</div>` : "";
+  return `<article class="entry" id="${e.id}"><div class="split">
+    <div class="head"><h3>${L(e.title)}<span class="sub">${L(e.sub)}</span></h3>${label(e.label)}</div>
+    <div class="body">${body}</div></div>${gallery}</article>`;
+}
+
+function indexList(items, room){
+  return `<ul class="index">${items.map(i=>`<li><a href="#${room}-${i.id}"><span class="y">${esc(i.year)}</span><span class="t">${L(i.title)}</span><span class="r">${L(i.short)}</span></a></li>`).join("")}</ul>`;
+}
+function head(key){ return `<a class="panel-head" href="#${key}"><h2>${L(C.sections[key])}</h2>${ARROW}</a>`; }
+
+function renderHome(){
+  const r = C.research, H = C.home;
+  const img = (n,pos,alt) => `<img src="${IMG}${n}.jpg" alt="${esc(alt||"")}" decoding="async"${pos?` style="--pos:${pos}"`:""}>`;
+  const tile = t => `<div class="tile${t.d?" d-only":""}"><a class="thumb" href="#exhibitions-${t.id}" style="--ar:${t.ar};--arm:${t.arm||t.ar}">${img(t.img,t.pos,t.cap[1])}</a><span>${L(t.cap)}</span></div>`;
+  const half = Math.ceil(H.tiles.length/2);
+  document.getElementById("home").innerHTML = `<div class="band">
+    <div class="col c-about"><div class="col-in">
+      <h2><a href="#about">${L(C.name)}</a></h2>
+      <span class="fill">${img("about-03","50% 28%","Yitian Wang")}</span>
+      <div class="info">
+        <div><span class="soft">${L(["所在","Based"])}</span><span class="m-only">${L(["伦敦 · 上海","London · Shanghai"])}</span><span class="d-only">${L(["伦敦","London"])}<br>${L(["上海","Shanghai"])}</span></div>
+        <div><span class="soft">${L(["方向","Focus"])}</span><span class="m-only">${L(["观众研究 × 展览实践","Audience research"])}</span><span class="d-only">${L(["观众研究","Audience research"])}<br>${L(["展览实践","Exhibitions"])}</span></div>
+        <div class="d-only"><span class="soft">${L(["联系","Contact"])}</span><a href="mailto:${C.about.email}">${L(["邮箱","Email"])}</a></div>
+        <div class="d-only"><span class="soft">${L(["关注","Follow"])}</span><a href="${C.about.linkedin}" target="_blank" rel="noopener">LinkedIn</a></div>
+      </div>
+    </div></div>
+    <div class="col c-research"><div class="col-in">
+      <h2><a href="#research">${L(C.sections.research)}</a></h2>
+      <ol class="finds">${r.findings.map(f=>`<li>${L(f[0])}</li>`).join("")}</ol>
+      <div class="spacer"></div>
+      <p class="eyebrow d-only">${L(r.eyebrow)}</p>
+      <p class="slogan">${L(r.hook)}</p>
+      <div class="line d-only"></div>
+    </div></div>
+    <div class="col c-exhibitions"><div class="col-in">
+      <h2><a href="#exhibitions">${L(C.sections.exhibitions)}</a></h2>
+      <nav class="tabs" aria-label="Exhibitions"><a class="on" href="#exhibitions">${L(["精选","Featured"])}</a><a class="soft" href="#exhibitions-index">${L(["全部","Archive"])}</a></nav>
+      <div class="masonry"><div>${H.tiles.slice(0,half).map(tile).join("")}</div><div>${H.tiles.slice(half).map(tile).join("")}</div></div>
+    </div></div>
+    <div class="col c-museums"><div class="col-in">
+      <h2><a href="#museums">${L(C.sections.museums)}</a></h2>
+      <div class="places d-only">${H.places.map(p=>`<span>${L(p)}</span>`).join("")}</div>
+      <span class="fill">${img("gm-01","50% 30%","Stained glass at the Garden Museum")}</span>
+      <p class="slogan d-only">${L(H.museumsLine)}</p>
+      <p class="note m-only">${L(["花园博物馆 · 上海工业博物馆筹备组","Garden Museum · Shanghai Industrial Museum"])}</p>
+    </div></div>
+  </div>`;
+}
+
+const ORDER = ["about","research","exhibitions","museums"];
+function roomNav(key){
+  const i = ORDER.indexOf(key), next = ORDER[(i+1)%ORDER.length];
+  return `<nav class="room-nav"><a href="#">← ${L(["首页","Home"])}</a><a href="#${next}">${L(C.sections[next])} →</a></nav>`;
+}
+function roomShell(key, lead, inner, title){
+  return `<section class="room" id="room-${key}" aria-labelledby="t-${key}"><div class="room-inner">
+    <header><h1 class="room-title" id="t-${key}">${L(title || C.sections[key])}</h1>${lead?`<p class="room-lead">${L(lead)}</p>`:""}</header>
+    ${inner}${roomNav(key)}${key==="about" ? `<p class="colophon">${L(C.colophon)}</p>` : ""}</div></section>`;
+}
+
+function renderRooms(){
+  const r = C.research;
+  const research = roomShell("research", null, `
+    <article class="entry split" style="border-top:0;padding-top:0">
+      <div class="head"><p class="meta">${L(r.eyebrow)}</p><h3>${L(r.title)}</h3>
+        <ul class="figures">${r.figures.map(f=>`<li><b>${f[0]}</b>${L(f[1])}</li>`).join("")}</ul>
+        ${ext(r.site[0], r.site[1])}</div>
+      <div class="body">
+        <p class="big-quote">${L(r.hook)}</p>
+        <h4>${L(["研究问题","The question"])}</h4><p>${L(r.question)}</p>
+        <div class="site-photos">${r.sitePhotos.map(p=>`<figure>${ph(p[0])}<figcaption>${L(p[1])}</figcaption></figure>`).join("")}</div>
+        <h4>${L(["方法与样本","Methods and sample"])}</h4>
+        <div class="scroll"><table class="methods"><thead><tr><th>${L(["方法","Method"])}</th><th>${L(["规模","Scale"])}</th><th>${L(["用途","Used for"])}</th></tr></thead>
+        <tbody>${r.methods.map(m=>`<tr><td><b>${L(m[0])}</b></td><td>${L(m[1])}</td><td>${L(m[2])}</td></tr>`).join("")}</tbody></table></div>
+        <p class="pending">${L(r.analysis)}</p>
+        <h4>${L(["我如何保证结论可靠","How I kept the findings honest"])}</h4>
+        <ul>${r.craft.map(c=>`<li><b>${L(c[0])}</b>${L(["：",": "])}${L(c[1])}</li>`).join("")}</ul>
+        <h4>${L(["核心发现","Key findings"])}</h4>
+        <ol class="themes">${r.findings.map((f,i)=>`<li><p class="theme-t"><span class="n">${L(["主题","Theme"])} ${i+1}</span>${L(f[0])}</p><ul>${f[1].map(p=>`<li>${L(p)}</li>`).join("")}</ul></li>`).join("")}</ol>
+        <h4>${L(["综合来看","Putting it together"])}</h4>
+        <ul>${r.synthesis.map(p=>`<li>${L(p)}</li>`).join("")}</ul>
+        <h4>${L(["建议 · 实践层面","Recommendations · for museums"])}</h4>
+        <ol class="findings">${r.recs.map((f,i)=>`<li><span class="n">${i+1}</span><span><b>${L(f[0])}</b>${L(f[1])}</span></li>`).join("")}</ol>
+        <h4>${L(["建议 · 研究层面","Recommendations · for future research"])}</h4>
+        <ul>${r.future.map(p=>`<li>${L(p)}</li>`).join("")}</ul>
+        <h4>${L(["观众怎么说","In visitors' words"])}</h4>
+        <ul class="voices">${r.voices.map(v=>`<li>${L(v)}</li>`).join("")}</ul>
+        <p class="pending">${L(r.voicesNote)}</p>
+      </div>
+    </article>
+    <aside class="big-idea"><p class="meta">${L(["核心观点","Big idea"])}</p><p>${L(r.bigIdea)}</p></aside>`);
+  const ex = roomShell("exhibitions", ["从独立策展到现场执行，从伦敦到上海。","From curating to running the floor, in London and Shanghai."], `<ul class="index" id="index">${C.exhibitions.map(i=>`<li><a href="#exhibitions-${i.id}"><span class="y">${esc(i.year)}</span><span class="t">${L(i.title)}</span><span class="r">${L(i.short)}</span></a></li>`).join("")}</ul>` + C.exhibitions.map(entry).join(""));
+  const mu = roomShell("museums", ["在博物馆内部，看一个展览和一场活动是怎样被准备出来的。","Inside museums, seeing how exhibitions and programmes get made."], C.museums.map(entry).join(""));
+  const a = C.about;
+  const ab = roomShell("about", null, `
+    <div class="about-photos">${a.photos.map(n=>ph(n,"portrait")).join("")}</div>
+    <article class="entry split">
+      <div class="head"><h3>${L(C.sections.about)}<span class="sub">${L(C.subline)}</span></h3>
+        <dl class="label contact"><dt>${L(["邮箱","Email"])}</dt><dd><a href="mailto:${a.email}">${a.email}</a></dd><dt>LinkedIn</dt><dd><a href="${a.linkedin}" target="_blank" rel="noopener">linkedin.com/in/yitian-wang-858400280</a></dd></dl></div>
+      <div class="body"><p class="big-quote">${L(C.tagline)}</p><p>${L(a.intro)}</p>
+        ${a.interview ? ext(a.interview[0], a.interview[1]) : (SHOW_SLOTS ? `<p class="pending">${L(["个人专访：即将发布","Interview: coming soon"])}</p>` : "")}
+        <h4>${L(["其他经历","Also"])}</h4><p>${L(a.also)}</p></div>
+    </article>`, C.name);
+  document.getElementById("rooms").innerHTML = research + ex + mu + ab;
+}
+
+/* photos: show if the file exists, otherwise show a slot (or hide it) */
+function loadPhotos(scope){
+  scope.querySelectorAll(".ph[data-src]:not([data-req])").forEach(f=>{
+    f.dataset.req = "1";
+    const img = new Image(); img.alt = ""; img.decoding = "async";
+    img.onload = ()=>{ f.prepend(img); f.classList.add("loaded"); };
+    img.onerror = ()=>{ if(!SHOW_SLOTS) (f.closest(".gitem")||f).remove(); };
+    img.src = f.dataset.src;
+  });
+}
+/* 背景：竖屏（手机、竖放的 iPad）用竖图，横屏（电脑、横放的 iPad）用横图 */
+const PORTRAIT = window.matchMedia("(orientation: portrait)");
+/* 背景照片开关：false = 用纯色背景（颜色在 CSS 的 --ground） */
+const BG_PHOTO = false;
+function loadBackground(){
+  if (!BG_PHOTO) return;
+  const file = PORTRAIT.matches ? "background-portrait.jpg" : "background.jpg";
+  const bg = new Image();
+  bg.onload = ()=>{ document.getElementById("bg").style.backgroundImage = `url("${IMG}${file}")`; };
+  bg.onerror = ()=>{ if (SHOW_SLOTS) document.getElementById("bgNote").hidden = false; };
+  bg.src = IMG + file;
+}
+
+/* language */
+function setLang(l){
+  document.documentElement.dataset.lang = l;
+  document.documentElement.lang = l==="zh" ? "zh-CN" : "en";
+  document.querySelectorAll("#langBtn b").forEach(b=>b.className = b.dataset.l===l ? "" : "off");
+  try{ localStorage.setItem("wytina-lang", l); }catch(e){}
+}
+document.getElementById("langBtn").addEventListener("click",()=>{
+  setLang(document.documentElement.dataset.lang==="zh" ? "en" : "zh");
+});
+
+/* routing: #research, #exhibitions-threshold, ...
+   Motion follows atlason.com: from home, the column grows into its page (and back);
+   between pages, the next page slides up over the last one. */
+const EASE_IN = "cubic-bezier(.54,.15,.15,1)";
+const DUR = 1000;
+const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)");
+let current = null, busy = false;
+
+function parse(){
+  const h = location.hash.replace("#","");
+  const key = ORDER.find(k => h===k || h.startsWith(k+"-")) || null;
+  const item = key && h.startsWith(key+"-") ? h.slice(key.length+1) : null;
+  return {key, item};
+}
+function show(key, item, opts={}){
+  document.querySelectorAll(".room").forEach(r=>{ if(!r.classList.contains("leaving")) r.classList.remove("open","enter","slide-in"); });
+  document.getElementById("home").hidden = !!key;
+  document.body.classList.toggle("in-room", !!key);
+  document.body.classList.toggle("room-about", key==="about");
+  if (key){
+    const room = document.getElementById("room-"+key);
+    room.classList.add("open"); if (opts.cls) room.classList.add(opts.cls);
+    loadPhotos(room);
+    window.scrollTo(0,0);
+    if (item) scrollToItem(item, opts.animated);
+    return room;
+  }
+  window.scrollTo(0,0);
+  return null;
+}
+function scrollToItem(id, animated){
+  const el = document.getElementById(id); if (!el) return;
+  if (animated && !REDUCED.matches) setTimeout(()=>el.scrollIntoView({behavior:"smooth"}), 350);
+  else requestAnimationFrame(()=>el.scrollIntoView());
+}
+const box = r => ({left:r.left+"px", top:r.top+"px", width:r.width+"px", height:r.height+"px"});
+const fs = el => parseFloat(getComputedStyle(el).fontSize);
+
+/* a white sheet with the page title in it, used to carry the eye between home and a room */
+function makeSheet(rect, titleEl, titleRect){
+  const z = document.createElement("div"); z.className = "zoom"; Object.assign(z.style, box(rect));
+  const t = document.createElement("p"); t.className = "zoom-title";
+  const src = titleEl.querySelector("a") || titleEl; t.innerHTML = src.innerHTML;
+  const cs = getComputedStyle(titleEl);
+  Object.assign(t.style, {fontSize:cs.fontSize, lineHeight:cs.lineHeight, letterSpacing:cs.letterSpacing});
+  z.appendChild(t); document.body.appendChild(z);
+  return {z, t};
+}
+function measureRoom(key){
+  const room = document.getElementById("room-"+key);
+  room.classList.add("measure");
+  const inner = room.querySelector(".room-inner"), title = room.querySelector(".room-title");
+  const ir = inner.getBoundingClientRect(), tr = title.getBoundingClientRect(), y = window.scrollY;
+  const sheet = {left:ir.left, top:ir.top + y, width:ir.width, height:Math.min(ir.height, window.innerHeight - (ir.top + y))};
+  const t = {left:tr.left, top:tr.top + y, size:fs(title)};
+  room.classList.remove("measure");
+  return {sheet, t};
+}
+function done(fn){ return new Promise(r=>setTimeout(r, fn)); }
+
+async function zoomIn(key, item){
+  const col = document.querySelector(".c-"+key);
+  if (REDUCED.matches || !col || document.getElementById("home").hidden){ show(key, item); return; }
+  busy = true; document.body.classList.add("is-busy");
+  const r0 = col.getBoundingClientRect(), h = col.querySelector("h2"), h0 = h.getBoundingClientRect();
+  const {sheet, t} = measureRoom(key);
+  const {z, t:title} = makeSheet(r0, h);
+  const s0 = fs(h), k = t.size / s0;
+  const from = {x:h0.left - r0.left, y:h0.top - r0.top}, to = {x:t.left - sheet.left, y:t.top - sheet.top};
+  title.style.transform = `translate(${from.x}px,${from.y}px)`;
+  if (key==="about") document.body.classList.add("room-about");
+  document.querySelectorAll(".col").forEach(c=>{ if(c!==col) c.animate([{opacity:1,transform:"none"},{opacity:0,transform:"scale(.985)"}],{duration:450,easing:"ease",fill:"forwards"}); });
+  const opt = {duration:DUR, easing:EASE_IN, fill:"forwards"};
+  z.animate([box(r0), box(sheet)], opt);
+  title.animate([{transform:`translate(${from.x}px,${from.y}px) scale(1)`},{transform:`translate(${to.x}px,${to.y}px) scale(${k})`}], opt);
+  await done(DUR);
+  show(key, item, {cls:"enter", animated:true});
+  document.querySelectorAll(".col").forEach(c=>c.getAnimations().forEach(a=>a.cancel()));
+  requestAnimationFrame(()=>{ z.remove(); busy = false; document.body.classList.remove("is-busy"); });
+}
+
+async function zoomOut(prev){
+  const room = document.getElementById("room-"+prev);
+  if (REDUCED.matches || !room){ show(null); return; }
+  busy = true; document.body.classList.add("is-busy");
+  const inner = room.querySelector(".room-inner"), rt = room.querySelector(".room-title");
+  const ir = inner.getBoundingClientRect(), tr = rt.getBoundingClientRect();
+  const top = Math.max(ir.top, 0);
+  const r0 = {left:ir.left, top, width:ir.width, height:Math.max(80, Math.min(ir.bottom, window.innerHeight) - top)};
+  const {z, t:title} = makeSheet(r0, rt);
+  const titleVisible = tr.bottom > 0;
+  const from = titleVisible ? {x:tr.left - r0.left, y:tr.top - r0.top} : {x:tr.left - r0.left, y:28};
+  document.body.classList.remove("room-about");
+  show(null);
+  const col = document.querySelector(".c-"+prev);
+  const cols = [...document.querySelectorAll(".col")];
+  cols.forEach(c=>c.style.opacity = "0");
+  const r1 = col.getBoundingClientRect(), h = col.querySelector("h2"), h1 = h.getBoundingClientRect();
+  const k = fs(rt) / fs(h);
+  const to = {x:h1.left - r1.left, y:h1.top - r1.top};
+  const opt = {duration:DUR, easing:EASE_IN, fill:"forwards"};
+  z.animate([box(r0), box(r1)], opt);
+  title.animate([{transform:`translate(${from.x}px,${from.y}px) scale(${k})`, opacity:titleVisible?1:0},{transform:`translate(${to.x}px,${to.y}px) scale(1)`, opacity:1}], opt);
+  cols.forEach(c=>{ if(c!==col) c.animate([{opacity:0,transform:"scale(.985)"},{opacity:1,transform:"none"}],{duration:600,delay:DUR*.55,easing:"ease",fill:"forwards"}); });
+  await done(DUR);
+  cols.forEach(c=>{ c.style.opacity = ""; c.getAnimations().forEach(a=>a.cancel()); });
+  requestAnimationFrame(()=>{ z.remove(); busy = false; document.body.classList.remove("is-busy"); });
+}
+
+async function slideTo(prev, key, item){
+  const old = document.getElementById("room-"+prev);
+  if (REDUCED.matches || !old){ show(key, item); return; }
+  busy = true; document.body.classList.add("is-busy");
+  old.style.top = (-window.scrollY) + "px";
+  old.classList.add("leaving");
+  const wall = getComputedStyle(document.documentElement).getPropertyValue(key==="about" ? "--wall-about" : "--wall");
+  const room = show(key, null, {cls:"slide-in"});
+  room.style.setProperty("--wall-now", wall);
+  await done(DUR);
+  old.classList.remove("leaving","open"); old.style.top = "";
+  room.classList.remove("slide-in");
+  if (item) scrollToItem(item, true);
+  busy = false; document.body.classList.remove("is-busy");
+}
+
+function navigate(){
+  const {key, item} = parse();
+  const prev = current; current = key;
+  if (busy){ show(key, item); return; }
+  if (!prev && key) zoomIn(key, item);
+  else if (prev && !key) zoomOut(prev);
+  else if (prev && key && prev!==key) slideTo(prev, key, item);
+  else if (key && item) scrollToItem(item, true);
+  else show(key, item);
+}
+
+
+/* ---------- lightbox ---------- */
+const LB = {el:document.getElementById("lb"), img:document.getElementById("lbImg"), cap:document.getElementById("lbCap"), count:document.getElementById("lbCount"), list:[], i:0, title:null, from:null};
+function lbFill(){
+  const a = LB.list[LB.i], n = a.dataset.name, c = CAPTIONS[n];
+  LB.img.src = a.getAttribute("href");
+  LB.img.alt = c ? c[1] : "";
+  LB.cap.innerHTML = (c ? L(c) + " · " : "") + `<span class="t">${L(LB.title)}</span>`;
+  LB.count.textContent = (LB.i+1) + " / " + LB.list.length;
+}
+function lbOpen(a){
+  const g = a.closest(".gallery");
+  LB.list = [...g.querySelectorAll(".gitem")]; LB.i = LB.list.indexOf(a);
+  LB.title = (g.dataset.title||"|").split("|");
+  LB.from = document.activeElement;
+  LB.el.classList.toggle("single", LB.list.length < 2);
+  LB.el.style.setProperty("--wall-now", getComputedStyle(document.body).backgroundColor);
+  lbFill();
+  LB.el.hidden = false; document.documentElement.style.overflow = "hidden";
+  document.getElementById("lbClose").focus({preventScroll:true});
+  if (REDUCED.matches) return;
+  LB.el.animate([{opacity:0},{opacity:1}],{duration:350,easing:"ease"});
+  /* grow from the thumbnail (same idea as the page zoom) */
+  const t = a.querySelector("img"); if (!t) return;
+  const go = ()=>{
+    const r0 = t.getBoundingClientRect(), r1 = LB.img.getBoundingClientRect();
+    if (!r1.width) return;
+    LB.img.animate([{transform:`translate(${r0.left-r1.left}px,${r0.top-r1.top}px) scale(${r0.width/r1.width},${r0.height/r1.height})`},{transform:"none"}],{duration:650,easing:EASE_IN});
+    LB.cap.animate([{opacity:0},{opacity:1}],{duration:400,delay:350,easing:"ease",fill:"backwards"});
+  };
+  if (LB.img.complete) go(); else LB.img.onload = ()=>{ LB.img.onload = null; go(); };
+}
+function lbClose(){
+  if (LB.el.hidden) return;
+  const end = ()=>{ LB.el.hidden = true; document.documentElement.style.overflow = ""; LB.img.removeAttribute("src"); if (LB.from) LB.from.focus({preventScroll:true}); };
+  if (REDUCED.matches) return end();
+  LB.el.animate([{opacity:1},{opacity:0}],{duration:280,easing:"ease"}).onfinish = end;
+}
+function lbStep(d){
+  if (LB.list.length < 2) return;
+  LB.i = (LB.i + d + LB.list.length) % LB.list.length;
+  lbFill();
+  if (!REDUCED.matches) LB.img.animate([{opacity:0,transform:`translateX(${d*24}px)`},{opacity:1,transform:"none"}],{duration:450,easing:EASE_IN});
+}
+document.getElementById("rooms").addEventListener("click", e=>{
+  const a = e.target.closest(".gitem");
+  if (!a || e.metaKey || e.ctrlKey || e.shiftKey) return;
+  e.preventDefault(); lbOpen(a);
+});
+document.getElementById("lbClose").addEventListener("click", lbClose);
+document.getElementById("lbPrev").addEventListener("click", ()=>lbStep(-1));
+document.getElementById("lbNext").addEventListener("click", ()=>lbStep(1));
+LB.el.addEventListener("click", e=>{ if (e.target.classList.contains("lb-stage") || e.target === LB.el) lbClose(); });
+document.addEventListener("keydown", e=>{
+  if (LB.el.hidden) return;
+  if (e.key === "Escape") lbClose();
+  else if (e.key === "ArrowRight") lbStep(1);
+  else if (e.key === "ArrowLeft") lbStep(-1);
+  else if (e.key === "Tab"){ /* keep focus inside the viewer */
+    const f = [...LB.el.querySelectorAll("button")].filter(b=>b.offsetParent!==null);
+    const i = f.indexOf(document.activeElement);
+    e.preventDefault(); f[(i + (e.shiftKey?-1:1) + f.length) % f.length].focus();
+  }
+});
+let tx = null;
+LB.el.addEventListener("touchstart", e=>{ tx = e.touches[0].clientX; }, {passive:true});
+LB.el.addEventListener("touchend", e=>{ if (tx===null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50) lbStep(dx < 0 ? 1 : -1); tx = null; });
+window.addEventListener("hashchange", lbClose);
+
+let saved = "zh"; try{ saved = localStorage.getItem("wytina-lang") || "zh"; }catch(e){}
+setLang(saved);
+renderHome(); renderRooms(); loadPhotos(document.getElementById("home")); loadBackground();
+current = parse().key; show(current, parse().item, {cls:"enter"});
+if (!current && !REDUCED.matches){ const b = document.querySelector(".band"); b.classList.add("load"); setTimeout(()=>b.classList.remove("load"), 1400); }
+window.addEventListener("hashchange", navigate);
+let lastY = 0;
+window.addEventListener("scroll", ()=>{ const y = window.scrollY; if (Math.abs(y-lastY) < 6) return; document.body.classList.toggle("scroll-down", y > lastY && y > 80); lastY = y; }, {passive:true});
+if (PORTRAIT.addEventListener) PORTRAIT.addEventListener("change", loadBackground);
+</script>
+
+</body>
+</html>
