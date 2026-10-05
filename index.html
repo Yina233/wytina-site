@@ -5,6 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#C6C6B4">
 <meta name="description" content="王裔天 Yitian Wang (Tina) · 观众研究 × 展览实践 · 伦敦 / 上海">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.wytina.com/">
+<meta property="og:title" content="王裔天 Yitian Wang">
+<meta property="og:description" content="观众研究 × 展览实践 · 伦敦 / 上海 · Audience research and exhibitions, London / Shanghai">
+<meta property="og:image" content="https://www.wytina.com/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <title>王裔天 Yitian Wang</title>
 <style>
 /* Layout (Atlason direction):
@@ -101,10 +112,11 @@ html[data-lang="zh"] .col h2{line-height:1.1;letter-spacing:0}
 html[data-lang="zh"] .col h2{font-size:9.2cqi}
 .c-about .col-in{padding:0;gap:0}
 .c-about h2{padding:3.4cqi 3.6cqi 2.8cqi}
-.c-about .info{grid-template-columns:repeat(2,max-content);gap:5.5cqi;padding:2.4cqi 3.6cqi 2.8cqi;font-size:max(9px,3.6cqi);line-height:1.25}
+.c-about .info{grid-template-columns:minmax(0,auto) minmax(0,1fr);gap:5.5cqi;padding:2.4cqi 3.6cqi 2.8cqi;font-size:max(9px,3.6cqi);line-height:1.25}
 .c-research .finds{gap:1.2cqi;font-size:max(11px,5cqi);line-height:1.15;font-weight:500}
 html[data-lang="zh"] .c-research .finds{line-height:1.35}
-.c-research .slogan{font-size:max(12px,5.9cqi);line-height:1.12;letter-spacing:-.01em}
+.c-research .slogan{font-size:max(12px,5.9cqi);line-height:1.12;letter-spacing:-.01em;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+@container (max-height:150px){.c-research .slogan{-webkit-line-clamp:2}.c-museums .note{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:1;overflow:hidden}}
 html[data-lang="zh"] .c-research .slogan{font-size:max(12px,5.4cqi);line-height:1.4;letter-spacing:0}
 .c-exhibitions .col-in{padding-bottom:0}
 .c-exhibitions .tabs{gap:3.6cqi;font-size:max(10px,4.5cqi);margin-top:-.6cqi}
@@ -115,9 +127,10 @@ html[data-lang="zh"] .c-research .slogan{font-size:max(12px,5.4cqi);line-height:
 html[data-lang="zh"] .c-museums .note{line-height:1.35}
 
 /* landscape: one band of joined columns (sizes follow the band) */
-@media (orientation:landscape) and (min-width:900px) and (min-height:460px){
-  .band{flex-direction:row;align-items:stretch;gap:0;container-type:size;
+@media (orientation:landscape) and (min-width:660px){
+  .band{flex-direction:row;align-items:stretch;gap:0;container-type:size;container-name:band;
     width:min(1200px,84vw,calc((100svh - 170px) * 2));aspect-ratio:2/1}
+  .c-research .slogan{display:block;-webkit-line-clamp:unset}
   .col{width:auto;height:auto;container-type:normal;flex:var(--f) 1 0}
   .col-in{padding:.83cqw 1cqw 1.15cqw;gap:0}
   .c-about{--f:40}.c-research{--f:25}.c-exhibitions{--f:32}.c-museums{--f:23}
@@ -145,6 +158,23 @@ html[data-lang="zh"] .c-museums .note{line-height:1.35}
   .c-museums .places{display:flex;flex-direction:column;gap:.67cqw;margin-bottom:1.15cqw;font-size:max(13px,1.5cqw);line-height:1.1;font-weight:500;letter-spacing:-.01em}
   html[data-lang="zh"] .c-museums .places{font-size:max(13px,1.33cqw);line-height:1.35;letter-spacing:0}
   .c-museums .slogan{margin-top:.83cqw}
+}
+
+@media (orientation:landscape) and (min-width:660px) and (max-height:560px){
+  main.home{padding-top:calc(52px + env(safe-area-inset-top,0px));padding-bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+  .band{width:min(92vw,calc((100svh - 70px) * 2))}
+}
+
+/* a small band (phone on its side): lower the minimum type sizes so nothing gets cut off */
+@container band (max-width:720px){
+  .col h2{font-size:max(19px,3.67cqw)}
+  html[data-lang="zh"] .col h2{font-size:max(17px,2.83cqw)}
+  .c-research .finds,.c-museums .places,.c-exhibitions .tabs{font-size:max(11px,1.5cqw)}
+  html[data-lang="zh"] .c-research .finds,html[data-lang="zh"] .c-museums .places,html[data-lang="zh"] .c-exhibitions .tabs{font-size:max(11px,1.33cqw)}
+  .c-research .slogan,.c-museums .slogan{font-size:max(12px,1.83cqw)}
+  html[data-lang="zh"] .c-research .slogan,html[data-lang="zh"] .c-museums .slogan{font-size:max(12px,1.58cqw)}
+  .eyebrow,.c-exhibitions .tile span{display:none!important}
+  .c-about .info{font-size:9px;gap:6px}
 }
 
 /* ---------- shared bits used in rooms ---------- */
@@ -318,7 +348,7 @@ html[data-lang="zh"] .big-quote{font-size:calc(var(--s-h2) * .85);line-height:1.
   <button class="chip lang" id="langBtn" type="button" aria-label="切换语言 / Switch language"><b data-l="zh">中</b><span>/</span><b data-l="en">EN</b></button>
 </header>
 
-<main class="home" id="home"></main>
+<main class="home" id="home"><noscript><p style="background:#fff;padding:16px;max-width:30em">本网站需要开启 JavaScript 才能显示。This site needs JavaScript to display.</p></noscript></main>
 <div id="rooms"></div>
 
 <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Photo">
@@ -768,6 +798,7 @@ function setLang(l){
   document.documentElement.lang = l==="zh" ? "zh-CN" : "en";
   document.querySelectorAll("#langBtn b").forEach(b=>b.className = b.dataset.l===l ? "" : "off");
   try{ localStorage.setItem("wytina-lang", l); }catch(e){}
+  try{ setTitle(); }catch(e){}
 }
 document.getElementById("langBtn").addEventListener("click",()=>{
   setLang(document.documentElement.dataset.lang==="zh" ? "en" : "zh");
@@ -779,7 +810,15 @@ document.getElementById("langBtn").addEventListener("click",()=>{
 const EASE_IN = "cubic-bezier(.54,.15,.15,1)";
 const DUR = 1000;
 const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)");
-let current = null, busy = false;
+let current = null, busy = false, navId = 0;
+/* if the visitor navigates again mid-animation (e.g. presses Back), drop the running animation at once */
+function cancelTransition(){
+  document.querySelectorAll(".zoom").forEach(z=>z.remove());
+  document.querySelectorAll(".col").forEach(c=>{ c.style.opacity = ""; c.getAnimations().forEach(a=>a.cancel()); });
+  document.querySelectorAll(".room.leaving").forEach(r=>{ r.classList.remove("leaving","open"); r.style.top = ""; });
+  document.querySelectorAll(".room.slide-in").forEach(r=>r.classList.remove("slide-in"));
+  busy = false; document.body.classList.remove("is-busy");
+}
 
 function parse(){
   const h = location.hash.replace("#","");
@@ -787,11 +826,17 @@ function parse(){
   const item = key && h.startsWith(key+"-") ? h.slice(key.length+1) : null;
   return {key, item};
 }
+function setTitle(){
+  const k = current, zh = document.documentElement.dataset.lang === "zh";
+  const name = zh ? C.name[0] : C.name[1];
+  document.title = k && k !== "about" ? `${C.sections[k][zh?0:1]} · ${name}` : (zh ? "王裔天 Yitian Wang" : "Yitian Wang 王裔天");
+}
 function show(key, item, opts={}){
   document.querySelectorAll(".room").forEach(r=>{ if(!r.classList.contains("leaving")) r.classList.remove("open","enter","slide-in"); });
   document.getElementById("home").hidden = !!key;
   document.body.classList.toggle("in-room", !!key);
   document.body.classList.toggle("room-about", key==="about");
+  setTitle();
   if (key){
     const room = document.getElementById("room-"+key);
     room.classList.add("open"); if (opts.cls) room.classList.add(opts.cls);
@@ -833,7 +878,7 @@ function measureRoom(key){
 }
 function done(fn){ return new Promise(r=>setTimeout(r, fn)); }
 
-async function zoomIn(key, item){
+async function zoomIn(key, item, id){
   const col = document.querySelector(".c-"+key);
   if (REDUCED.matches || !col || document.getElementById("home").hidden){ show(key, item); return; }
   busy = true; document.body.classList.add("is-busy");
@@ -849,12 +894,13 @@ async function zoomIn(key, item){
   z.animate([box(r0), box(sheet)], opt);
   title.animate([{transform:`translate(${from.x}px,${from.y}px) scale(1)`},{transform:`translate(${to.x}px,${to.y}px) scale(${k})`}], opt);
   await done(DUR);
+  if (id !== navId) return;
   show(key, item, {cls:"enter", animated:true});
   document.querySelectorAll(".col").forEach(c=>c.getAnimations().forEach(a=>a.cancel()));
   requestAnimationFrame(()=>{ z.remove(); busy = false; document.body.classList.remove("is-busy"); });
 }
 
-async function zoomOut(prev){
+async function zoomOut(prev, id){
   const room = document.getElementById("room-"+prev);
   if (REDUCED.matches || !room){ show(null); return; }
   busy = true; document.body.classList.add("is-busy");
@@ -878,11 +924,12 @@ async function zoomOut(prev){
   title.animate([{transform:`translate(${from.x}px,${from.y}px) scale(${k})`, opacity:titleVisible?1:0},{transform:`translate(${to.x}px,${to.y}px) scale(1)`, opacity:1}], opt);
   cols.forEach(c=>{ if(c!==col) c.animate([{opacity:0,transform:"scale(.985)"},{opacity:1,transform:"none"}],{duration:600,delay:DUR*.55,easing:"ease",fill:"forwards"}); });
   await done(DUR);
+  if (id !== navId) return;
   cols.forEach(c=>{ c.style.opacity = ""; c.getAnimations().forEach(a=>a.cancel()); });
   requestAnimationFrame(()=>{ z.remove(); busy = false; document.body.classList.remove("is-busy"); });
 }
 
-async function slideTo(prev, key, item){
+async function slideTo(prev, key, item, id){
   const old = document.getElementById("room-"+prev);
   if (REDUCED.matches || !old){ show(key, item); return; }
   busy = true; document.body.classList.add("is-busy");
@@ -892,6 +939,7 @@ async function slideTo(prev, key, item){
   const room = show(key, null, {cls:"slide-in"});
   room.style.setProperty("--wall-now", wall);
   await done(DUR);
+  if (id !== navId) return;
   old.classList.remove("leaving","open"); old.style.top = "";
   room.classList.remove("slide-in");
   if (item) scrollToItem(item, true);
@@ -902,10 +950,11 @@ function navigate(){
   const {key, item} = parse();
   if (document.activeElement && document.activeElement.closest && document.activeElement.closest(".bar,.room-nav,.col")) document.activeElement.blur();
   const prev = current; current = key;
-  if (busy){ show(key, item); return; }
-  if (!prev && key) zoomIn(key, item);
-  else if (prev && !key) zoomOut(prev);
-  else if (prev && key && prev!==key) slideTo(prev, key, item);
+  const id = ++navId;
+  if (busy){ cancelTransition(); show(key, item); return; }
+  if (!prev && key) zoomIn(key, item, id);
+  else if (prev && !key) zoomOut(prev, id);
+  else if (prev && key && prev!==key) slideTo(prev, key, item, id);
   else if (key && item) scrollToItem(item, true);
   else show(key, item);
 }
@@ -930,6 +979,7 @@ function lbOpen(a){
   LB.el.style.setProperty("--wall-now", getComputedStyle(document.body).backgroundColor);
   lbFill();
   LB.el.hidden = false; document.documentElement.style.overflow = "hidden";
+  if (!(history.state && history.state.lb)) history.pushState({lb:1}, "");
   document.getElementById("lbClose").focus({preventScroll:true});
   if (REDUCED.matches) return;
   LB.el.animate([{opacity:0},{opacity:1}],{duration:350,easing:"ease"});
@@ -943,12 +993,18 @@ function lbOpen(a){
   };
   if (LB.img.complete) go(); else LB.img.onload = ()=>{ LB.img.onload = null; go(); };
 }
-function lbClose(){
+function lbCloseNow(){
   if (LB.el.hidden) return;
   const end = ()=>{ LB.el.hidden = true; document.documentElement.style.overflow = ""; LB.img.removeAttribute("src"); if (LB.from) LB.from.focus({preventScroll:true}); };
   if (REDUCED.matches) return end();
   LB.el.animate([{opacity:1},{opacity:0}],{duration:280,easing:"ease"}).onfinish = end;
 }
+/* the phone's Back button / swipe closes the viewer instead of leaving the page */
+function lbClose(){
+  if (LB.el.hidden) return;
+  if (history.state && history.state.lb) history.back(); else lbCloseNow();
+}
+window.addEventListener("popstate", ()=>{ if (!LB.el.hidden && !(history.state && history.state.lb)) lbCloseNow(); });
 function lbStep(d){
   if (LB.list.length < 2) return;
   LB.i = (LB.i + d + LB.list.length) % LB.list.length;
@@ -978,7 +1034,7 @@ document.addEventListener("keydown", e=>{
 let tx = null;
 LB.el.addEventListener("touchstart", e=>{ tx = e.touches[0].clientX; }, {passive:true});
 LB.el.addEventListener("touchend", e=>{ if (tx===null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50) lbStep(dx < 0 ? 1 : -1); tx = null; });
-window.addEventListener("hashchange", lbClose);
+window.addEventListener("hashchange", lbCloseNow);
 
 let saved = "zh"; try{ saved = localStorage.getItem("wytina-lang") || "zh"; }catch(e){}
 setLang(saved);
