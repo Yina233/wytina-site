@@ -51,11 +51,13 @@ html[data-lang="zh"] body{line-height:1.75}
 .bar{transition:transform .6s var(--ease-in,ease)}
 body.in-room.scroll-down .bar{transform:translateY(-110%)}
 .chip{display:inline-flex;align-items:center;gap:5px;background:var(--paper);color:var(--ink);border:0;font:500 13px/1 var(--sans);padding:10px 14px;min-height:36px;text-decoration:none;cursor:pointer}
-.chip:hover{background:var(--ink);color:var(--paper)}
+@media (hover:hover){.chip:hover{background:var(--ink);color:var(--paper)}}
+.bar .lang{margin-left:auto}
 .lang b{font-weight:500}.lang b.off{color:var(--ink-soft);font-weight:400}
-.chip:hover b.off{color:var(--paper)}
-.home-link{visibility:hidden;opacity:0;transition:opacity .4s,visibility 0s .4s}
-body.in-room .home-link{visibility:visible;opacity:1;transition:opacity .6s .5s}
+@media (hover:hover){.chip:hover b.off{color:var(--paper)}}
+.home-link{display:none!important}
+body.in-room .home-link{display:inline-flex!important;animation:chip-in .5s .5s ease both}
+@keyframes chip-in{from{opacity:0}to{opacity:1}}
 body.in-room .bg-note{display:none}
 
 /* ---------- home ---------- */
@@ -194,7 +196,8 @@ body.is-busy main.home,body.is-busy .room{pointer-events:none}
 .band.load .col{animation:fade-up .9s var(--ease-in) both}
 .band.load .col:nth-child(2){animation-delay:.08s}.band.load .col:nth-child(3){animation-delay:.16s}.band.load .col:nth-child(4){animation-delay:.24s}
 @media (prefers-reduced-motion:reduce){
-  body,.col-in,.home-link{transition:none!important}
+  body,.col-in{transition:none!important}
+  body.in-room .home-link{animation:none}
   .room.enter .room-inner>*,.room.slide-in,.room.leaving,.band.load .col{animation:none!important}
 }
 .room-inner{max-width:1200px;margin:0 auto;background:var(--paper);padding:18px 16px 28px;display:flex;flex-direction:column;gap:48px}
@@ -216,6 +219,7 @@ html[data-lang="en"] .label{grid-template-columns:6.5em 1fr}
 .body p{margin:0}
 .body b{font-weight:600}
 .body ul,.body ol{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:8px}
+.body ul,.body ul ul,.themes ul{list-style-type:disc}
 .body h4{margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--ink-soft)}
 .body h4+*{margin-top:-8px}
 .pending{color:var(--ink-soft);font-size:14px}
@@ -270,7 +274,7 @@ html[data-lang="zh"] .big-idea p:last-child{white-space:pre-line;font-size:clamp
 .lb-cap{font-size:13px;line-height:1.45;color:var(--ink);text-align:center;max-width:40em;min-height:1.45em}
 .lb-cap .t{color:var(--ink-soft)}
 .lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border:0;background:var(--paper);color:var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer}
-.lb-nav:hover{background:var(--ink);color:var(--paper)}
+@media (hover:hover){.lb-nav:hover{background:var(--ink);color:var(--paper)}}
 .lb-prev{left:0}.lb-next{right:0}
 .lb-nav svg{width:22px;height:16px}
 .lb.single .lb-nav{display:none}
@@ -334,6 +338,8 @@ html[data-lang="zh"] .big-quote{font-size:calc(var(--s-h2) * .85);line-height:1.
    ============================================================ */
 const SHOW_SLOTS = false;
 const IMG = "images/";
+/* 小图（首页和列表用，约 1000 像素）；点开放大时才加载 images/ 里的原图 */
+const THUMB = "images/thumb/";
 /* 这些照片完整显示、不裁剪 / shown whole, never cropped */
 /* 照片说明（展览、实习页的照片下方和放大查看时显示）[中文, English] */
 const CAPTIONS = {
@@ -602,8 +608,8 @@ const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>
 const L = p => Array.isArray(p) ? (p[0]===p[1] ? esc(p[0]) : `<span class="zh">${esc(p[0])}</span><span class="en">${esc(p[1])}</span>`) : esc(p);
 const ARROW = `<svg class="arrow" viewBox="0 0 44 32" aria-hidden="true"><path d="M2 16h38M26 2l14 14-14 14" fill="none" stroke="currentColor" stroke-width="3.2"/></svg>`;
 const ph = (name, cls="", crop=null) => crop
-  ? `<figure class="ph ${cls}" style="aspect-ratio:${crop.ar};--pos:${crop.pos}" data-src="${IMG}${name}.jpg"><span class="slot">${name}.jpg</span></figure>`
-  : `<figure class="ph ${cls}${FULL.includes(name)?" full":""}" data-src="${IMG}${name}.jpg"><span class="slot">${name}.jpg</span></figure>`;
+  ? `<figure class="ph ${cls}" style="aspect-ratio:${crop.ar};--pos:${crop.pos}" data-src="${THUMB}${name}.jpg"><span class="slot">${name}.jpg</span></figure>`
+  : `<figure class="ph ${cls}${FULL.includes(name)?" full":""}" data-src="${THUMB}${name}.jpg"><span class="slot">${name}.jpg</span></figure>`;
 const label = rows => `<dl class="label">${rows.map(r=>`<dt>${L(r[0])}</dt><dd>${L(r[1])}</dd>`).join("")}</dl>`;
 const ext = (url, text) => `<a class="more" href="${esc(url)}" target="_blank" rel="noopener">${L(text)} ↗</a>`;
 
@@ -632,7 +638,7 @@ function head(key){ return `<a class="panel-head" href="#${key}"><h2>${L(C.secti
 
 function renderHome(){
   const r = C.research, H = C.home;
-  const img = (n,pos,alt) => `<img src="${IMG}${n}.jpg" alt="${esc(alt||"")}" decoding="async"${pos?` style="--pos:${pos}"`:""}>`;
+  const img = (n,pos,alt) => `<img src="${THUMB}${n}.jpg" alt="${esc(alt||"")}" decoding="async"${pos?` style="--pos:${pos}"`:""}>`;
   const tile = t => `<div class="tile${t.d?" d-only":""}"><a class="thumb" href="#exhibitions-${t.id}" style="--ar:${t.ar};--arm:${t.arm||t.ar}">${img(t.img,t.pos,t.cap[1])}</a><span>${L(t.cap)}</span></div>`;
   const half = Math.ceil(H.tiles.length/2);
   document.getElementById("home").innerHTML = `<div class="band">
@@ -727,13 +733,20 @@ function renderRooms(){
 }
 
 /* photos: show if the file exists, otherwise show a slot (or hide it) */
+/* photos load only when they come near the screen, so a slow connection gets the first ones first */
+function loadOne(f){
+  const img = new Image(); img.alt = ""; img.decoding = "async";
+  img.onload = ()=>{ f.prepend(img); f.classList.add("loaded"); };
+  img.onerror = ()=>{ if(!SHOW_SLOTS) (f.closest(".gitem")||f).remove(); };
+  img.src = f.dataset.src;
+}
+const PHOTO_IO = "IntersectionObserver" in window ? new IntersectionObserver(es=>{
+  es.forEach(e=>{ if (e.isIntersecting){ PHOTO_IO.unobserve(e.target); loadOne(e.target); } });
+}, {rootMargin:"600px 0px"}) : null;
 function loadPhotos(scope){
   scope.querySelectorAll(".ph[data-src]:not([data-req])").forEach(f=>{
     f.dataset.req = "1";
-    const img = new Image(); img.alt = ""; img.decoding = "async";
-    img.onload = ()=>{ f.prepend(img); f.classList.add("loaded"); };
-    img.onerror = ()=>{ if(!SHOW_SLOTS) (f.closest(".gitem")||f).remove(); };
-    img.src = f.dataset.src;
+    if (PHOTO_IO) PHOTO_IO.observe(f); else loadOne(f);
   });
 }
 /* 背景：竖屏（手机、竖放的 iPad）用竖图，横屏（电脑、横放的 iPad）用横图 */
@@ -887,6 +900,7 @@ async function slideTo(prev, key, item){
 
 function navigate(){
   const {key, item} = parse();
+  if (document.activeElement && document.activeElement.closest && document.activeElement.closest(".bar,.room-nav,.col")) document.activeElement.blur();
   const prev = current; current = key;
   if (busy){ show(key, item); return; }
   if (!prev && key) zoomIn(key, item);
@@ -905,6 +919,7 @@ function lbFill(){
   LB.img.alt = c ? c[1] : "";
   LB.cap.innerHTML = (c ? L(c) + " · " : "") + `<span class="t">${L(LB.title)}</span>`;
   LB.count.textContent = (LB.i+1) + " / " + LB.list.length;
+  [1,-1].forEach(d=>{ const nb = LB.list[(LB.i + d + LB.list.length) % LB.list.length]; if (nb) (new Image()).src = nb.getAttribute("href"); });
 }
 function lbOpen(a){
   const g = a.closest(".gallery");
