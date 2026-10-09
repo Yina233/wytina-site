@@ -106,7 +106,7 @@ html[data-lang="zh"] .col h2{line-height:1.1;letter-spacing:0}
 
 /* portrait: a column of small cards (sizes follow the card, via container queries) */
 /* note: a container's own padding can't use cqi (it would measure the viewport), so it uses --ch */
-.col{--ch:clamp(124px,calc((100svh - 150px) / 4),250px);width:calc(var(--ch) * 1.28);height:var(--ch);container-type:size}
+.col{--ch:clamp(112px,calc((100svh - 160px) / 5),230px);width:calc(var(--ch) * 1.28);height:var(--ch);container-type:size}
 .col-in{padding:calc(var(--ch) * .042) calc(var(--ch) * .046) calc(var(--ch) * .05);gap:calc(var(--ch) * .034)}
 .col h2{font-size:11.8cqi}
 html[data-lang="zh"] .col h2{font-size:9.2cqi}
@@ -116,39 +116,39 @@ html[data-lang="zh"] .col h2{font-size:9.2cqi}
 .c-research .finds{gap:1.2cqi;font-size:max(11px,5cqi);line-height:1.15;font-weight:500}
 html[data-lang="zh"] .c-research .finds{line-height:1.35}
 .c-research .slogan{font-size:max(12px,5.9cqi);line-height:1.12;letter-spacing:-.01em;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
-@container (max-height:150px){.c-research .slogan{-webkit-line-clamp:2}.c-museums .note{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:1;overflow:hidden}}
+@container (max-height:150px){.c-research .slogan{-webkit-line-clamp:2}.c-museums .note,.c-writing .note{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:1;overflow:hidden}}
 html[data-lang="zh"] .c-research .slogan{font-size:max(12px,5.4cqi);line-height:1.4;letter-spacing:0}
 .c-exhibitions .col-in{padding-bottom:0}
 .c-exhibitions .tabs{gap:3.6cqi;font-size:max(10px,4.5cqi);margin-top:-.6cqi}
 .c-exhibitions .tabs .on{border-bottom-width:1.5px}
 .masonry{gap:2.3cqi}.masonry>div{gap:2.3cqi}
 .c-exhibitions .tile span{display:none}
-.c-museums .note{margin:0;font-size:max(10px,5cqi);line-height:1.15;font-weight:500}
-html[data-lang="zh"] .c-museums .note{line-height:1.35}
+.c-museums .note,.c-writing .note{margin:0;font-size:max(10px,5cqi);line-height:1.15;font-weight:500}
+html[data-lang="zh"] .c-museums .note,html[data-lang="zh"] .c-writing .note{line-height:1.35}
 
 /* landscape: one band of joined columns (sizes follow the band) */
 @media (orientation:landscape) and (min-width:660px){
   .band{flex-direction:row;align-items:stretch;gap:0;container-type:size;container-name:band;
-    width:min(1200px,84vw,calc((100svh - 170px) * 2));aspect-ratio:2/1}
+    width:min(1320px,88vw,calc((100svh - 170px) * 2.2));aspect-ratio:2.2/1}
   .c-research .slogan{display:block;-webkit-line-clamp:unset}
   .col{width:auto;height:auto;container-type:normal;flex:var(--f) 1 0}
   .col-in{padding:.83cqw 1cqw 1.15cqw;gap:0}
-  .c-about{--f:40}.c-research{--f:25}.c-exhibitions{--f:32}.c-museums{--f:23}
+  .c-about{--f:34}.c-research{--f:22}.c-exhibitions{--f:28}.c-museums{--f:22}.c-writing{--f:20}
   .c-about .col-in{padding:0}.c-exhibitions .col-in{padding-bottom:0}
   .d-only{display:revert!important}.m-only{display:none!important}
   .info div.d-only,.tile.d-only,.c-museums .places.d-only{display:flex!important}
   .thumb{aspect-ratio:var(--ar,1)}
-  .col h2{font-size:max(26px,3.67cqw);letter-spacing:-.023em}
+  .col h2{font-size:max(24px,3.3cqw);letter-spacing:-.023em}
   html[data-lang="zh"] .col h2{font-size:max(22px,2.83cqw)}
   .c-about h2{padding:.83cqw 1cqw 1cqw}
-  .c-research h2,.c-museums h2{margin-bottom:1.15cqw}
+  .c-research h2,.c-museums h2,.c-writing h2{margin-bottom:1.15cqw}
   .c-exhibitions h2{margin-bottom:.5cqw}
   .c-about .info{grid-template-columns:repeat(4,minmax(0,1fr));gap:.83cqw;padding:1cqw;font-size:max(10px,.92cqw);line-height:1.3}
   .c-research .finds{gap:.67cqw;font-size:max(13px,1.5cqw);line-height:1.1;letter-spacing:-.01em}
   html[data-lang="zh"] .c-research .finds{font-size:max(13px,1.33cqw);line-height:1.35;letter-spacing:0}
   .eyebrow{margin:0 0 .67cqw;font-size:max(10px,.92cqw);color:var(--ink-soft);font-weight:400}
-  .c-research .slogan,.c-museums .slogan{font-size:max(15px,1.83cqw);line-height:1.08;letter-spacing:-.014em}
-  html[data-lang="zh"] .c-research .slogan,html[data-lang="zh"] .c-museums .slogan{font-size:max(14px,1.58cqw);line-height:1.4;letter-spacing:0}
+  .c-research .slogan,.c-museums .slogan,.c-writing .slogan{font-size:max(15px,1.83cqw);line-height:1.08;letter-spacing:-.014em}
+  html[data-lang="zh"] .c-research .slogan,html[data-lang="zh"] .c-museums .slogan,html[data-lang="zh"] .c-writing .slogan{font-size:max(14px,1.58cqw);line-height:1.4;letter-spacing:0}
   .line{margin-top:1.15cqw}
   .c-exhibitions .tabs{gap:1.15cqw;font-size:max(13px,1.5cqw);margin:0 0 1cqw}
   html[data-lang="zh"] .c-exhibitions .tabs{font-size:max(13px,1.33cqw)}
@@ -157,7 +157,8 @@ html[data-lang="zh"] .c-museums .note{line-height:1.35}
   .c-exhibitions .tile span{display:block;font-size:max(9.5px,.875cqw)}
   .c-museums .places{display:flex;flex-direction:column;gap:.67cqw;margin-bottom:1.15cqw;font-size:max(13px,1.5cqw);line-height:1.1;font-weight:500;letter-spacing:-.01em}
   html[data-lang="zh"] .c-museums .places{font-size:max(13px,1.33cqw);line-height:1.35;letter-spacing:0}
-  .c-museums .slogan{margin-top:.83cqw}
+  .c-museums .slogan,.c-writing .slogan{margin-top:.83cqw}
+  .c-writing .eyebrow{margin:0 0 1.15cqw}
 }
 
 @media (orientation:landscape) and (min-width:660px) and (max-height:560px){
@@ -171,8 +172,8 @@ html[data-lang="zh"] .c-museums .note{line-height:1.35}
   html[data-lang="zh"] .col h2{font-size:max(17px,2.83cqw)}
   .c-research .finds,.c-museums .places,.c-exhibitions .tabs{font-size:max(11px,1.5cqw)}
   html[data-lang="zh"] .c-research .finds,html[data-lang="zh"] .c-museums .places,html[data-lang="zh"] .c-exhibitions .tabs{font-size:max(11px,1.33cqw)}
-  .c-research .slogan,.c-museums .slogan{font-size:max(12px,1.83cqw)}
-  html[data-lang="zh"] .c-research .slogan,html[data-lang="zh"] .c-museums .slogan{font-size:max(12px,1.58cqw)}
+  .c-research .slogan,.c-museums .slogan,.c-writing .slogan{font-size:max(12px,1.83cqw)}
+  html[data-lang="zh"] .c-research .slogan,html[data-lang="zh"] .c-museums .slogan,html[data-lang="zh"] .c-writing .slogan{font-size:max(12px,1.58cqw)}
   .eyebrow,.c-exhibitions .tile span{display:none!important}
   .c-about .info{font-size:9px;gap:6px}
 }
@@ -224,7 +225,7 @@ body.is-busy main.home,body.is-busy .room{pointer-events:none}
 @keyframes to-top{from{transform:translateY(100vh)}to{transform:none}}
 @keyframes dim{to{opacity:.35}}
 .band.load .col{animation:fade-up .9s var(--ease-in) both}
-.band.load .col:nth-child(2){animation-delay:.08s}.band.load .col:nth-child(3){animation-delay:.16s}.band.load .col:nth-child(4){animation-delay:.24s}
+.band.load .col:nth-child(2){animation-delay:.08s}.band.load .col:nth-child(3){animation-delay:.16s}.band.load .col:nth-child(4){animation-delay:.24s}.band.load .col:nth-child(5){animation-delay:.32s}
 @media (prefers-reduced-motion:reduce){
   body,.col-in{transition:none!important}
   body.in-room .home-link{animation:none}
@@ -387,11 +388,12 @@ const CAPTIONS = {
   "gm-06":["Sunday Family Session 周日家庭活动","Sunday Family Session"],
   "gm-07":["British Flower Week Late 夜场活动","British Flower Week Late"],
   "gm-08":["休闲与活动空间","Leisure and activity space"],
-  "gm-09":["Sunday Family Session 周日家庭活动","Sunday Family Session"]
+  "gm-09":["Sunday Family Session 周日家庭活动","Sunday Family Session"],
+  "writing-kusama-01":["草间弥生《Flower Blooming》，1979，阿姆斯特丹市立博物馆现场拍摄","Yayoi Kusama, Flower Blooming, 1979, photographed at the Stedelijk Museum Amsterdam"]
 };
 /* 列表小图的裁剪（放大查看时仍显示完整照片）：ar = 宽高比，pos = 保留的位置 */
 const CROP = {"saatchi-02":{ar:"7/8", pos:"50% 100%"}, "gm-10":{ar:"4/3", pos:"50% 60%"}};
-const FULL = ["bookmarks-01","about-01","about-03","bookmarks-10","gm-01","gm-03","gm-10","ldf2026-01","ldf2026-06","saatchi-02","thecross-01"];
+const FULL = ["writing-kusama-01","bookmarks-01","about-01","about-03","bookmarks-10","gm-01","gm-03","gm-10","ldf2026-01","ldf2026-06","saatchi-02","thecross-01"];
 
 /* ============================================================
    内容 CONTENT — 改文字只需改这里。[中文, English]
@@ -413,11 +415,12 @@ const C = {
       {img:"ldf2026-07", id:"threshold", ar:.96, d:true, cap:["Threshold，影像作品","Threshold, moving image"]}
     ],
     places:[["伦敦花园博物馆","Garden Museum, London"],["上海工业博物馆筹备组","Shanghai Industrial Museum"]],
-    museumsLine:["从馆内，理解学习。","Learning, from the inside."]
+    museumsLine:["从馆内，理解学习。","Learning, from the inside."],
+    writingLine:["花苞回来了：草间弥生的花","The bud returns: Yayoi Kusama's flowers"]
   },
   sections:{
     research:["研究","Research"], exhibitions:["展览","Exhibitions"], museums:["实习","Museums"],
-    other:["其他","Elsewhere"], about:["关于","About"]
+    writing:["写作","Writing"], other:["其他","Elsewhere"], about:["关于","About"]
   },
   research:{
     eyebrow:["MA 论文 · UCL · 2026","MA dissertation · UCL · 2026"],
@@ -608,6 +611,20 @@ const C = {
       ],
       photos:[] }
   ],
+  /* 写作与线上策展：看展感想、线上策展。read = 站内全文链接 */
+  writing:[
+    { id:"kusama", year:"2026", title:["花苞回来了：草间弥生的花","The Bud Returns: Yayoi Kusama's Flowers"], short:["线上策展 · 草间弥生","Online curation · Yayoi Kusama"],
+      sub:["线上策展 · 中文 · 2026年10月","Online curation · in Chinese · October 2026"],
+      label:[
+        [["形式","Format"],["网页，两种读法：从一件作品读起 / 按时间线读","Web page, two ways to read: from one work, or along a timeline"]],
+        [["材料","Sources"],["阿姆斯特丹市立博物馆回顾展现场观展；泰特图书馆查阅展览图录","Visit to the retrospective at the Stedelijk Museum Amsterdam; exhibition catalogue consulted at the Tate Library"]],
+        [["篇幅","Length"],["每种读法约 1500 字","About 1,500 Chinese characters per version"]]
+      ],
+      intro:["2026 年 9 月，我在阿姆斯特丹市立博物馆看草间弥生的回顾展，停留最久的是一幅很少被提起的画：《Flower Blooming》（1979）。网上只能查到它的名称和尺寸，于是我去泰特图书馆翻阅展览图录，把它和她 1953 年画的花苞放在一起看，写成了这篇线上策展。同一批材料，两种读法：从一件作品读起，或者按时间线，读她一生画过的花。",
+        "In September 2026 I visited Yayoi Kusama's retrospective at the Stedelijk Museum Amsterdam. The work that held me longest was one rarely discussed: Flower Blooming (1979). Online I could find only its title and size, so I went to the Tate Library to read the exhibition catalogue, set it beside the buds she painted in 1953, and wrote this piece of online curation. One set of material, two ways to read it: starting from a single work, or following the flowers through her whole life."],
+      read:["/writing/kusama/",["阅读全文","Read the piece (in Chinese)"]],
+      photos:["writing-kusama-01"] }
+  ],
   other:[
     { id:"cross", year:"2024", title:["The Cross","The Cross"], short:["灯光助理与导演助理","Gaffer and Director's Assistant"],
       sub:["UCL 学生短片","UCL student short film"],
@@ -650,6 +667,7 @@ function entry(e){
   if (e.principles) body += `<h4>${L(["设计理念","Design approach"])}</h4><ol class="principles">${e.principles.map(p=>`<li><span><b>${L(p[0])}</b>${L(p[1])}</span></li>`).join("")}</ol>`;
   if (e.extra) body += `<h4>${L(e.extra[0])}</h4><p>${L(e.extra[1])}</p>`;
   const links = [];
+  if (e.read) links.push(`<a class="more" href="${esc(e.read[0])}">${L(e.read[1])} →</a>`);
   if (e.press) links.push(ext(e.press[0], e.press[1]));
   if (e.link) links.push(ext(e.link[0], e.link[1]));
   if (e.links) e.links.forEach(l=>links.push(ext(l[0], l[1])));
@@ -702,10 +720,17 @@ function renderHome(){
       <p class="slogan d-only">${L(H.museumsLine)}</p>
       <p class="note m-only">${L(["花园博物馆 · 上海工业博物馆筹备组","Garden Museum · Shanghai Industrial Museum"])}</p>
     </div></div>
+    <div class="col c-writing"><div class="col-in">
+      <h2><a href="#writing">${L(C.sections.writing)}</a></h2>
+      <p class="eyebrow d-only">${L(["看展感想 · 线上策展","Exhibition notes · online curation"])}</p>
+      <span class="fill">${img("writing-kusama-01","50% 45%","Yayoi Kusama, Flower Blooming, 1979")}</span>
+      <p class="slogan d-only">${L(H.writingLine)}</p>
+      <p class="note m-only">${L(["线上策展 · 草间弥生","Online curation · Yayoi Kusama"])}</p>
+    </div></div>
   </div>`;
 }
 
-const ORDER = ["about","research","exhibitions","museums"];
+const ORDER = ["about","research","exhibitions","museums","writing"];
 function roomNav(key){
   const i = ORDER.indexOf(key), next = ORDER[(i+1)%ORDER.length];
   return `<nav class="room-nav"><a href="#">← ${L(["首页","Home"])}</a><a href="#${next}">${L(C.sections[next])} →</a></nav>`;
@@ -749,6 +774,7 @@ function renderRooms(){
     <aside class="big-idea"><p class="meta">${L(["核心观点","Big idea"])}</p><p>${L(r.bigIdea)}</p></aside>`);
   const ex = roomShell("exhibitions", ["从独立策展到现场执行，从伦敦到上海。","From curating to running the floor, in London and Shanghai."], `<ul class="index" id="index">${C.exhibitions.map(i=>`<li><a href="#exhibitions-${i.id}"><span class="y">${esc(i.year)}</span><span class="t">${L(i.title)}</span><span class="r">${L(i.short)}</span></a></li>`).join("")}</ul>` + C.exhibitions.map(entry).join(""));
   const mu = roomShell("museums", ["在博物馆内部，看一个展览和一场活动是怎样被准备出来的。","Inside museums, seeing how exhibitions and programmes get made."], C.museums.map(entry).join(""));
+  const wr = roomShell("writing", ["看完展览之后，把想法写下来，或者做成一个线上的小展览。","What I write after seeing exhibitions, and small exhibitions made for the screen."], C.writing.map(entry).join(""), ["写作与线上策展","Writing & Online Curation"]);
   const a = C.about;
   const ab = roomShell("about", null, `
     <div class="about-photos">${a.photos.map(n=>ph(n,"portrait")).join("")}</div>
@@ -759,7 +785,7 @@ function renderRooms(){
         ${a.interview ? ext(a.interview[0], a.interview[1]) : (SHOW_SLOTS ? `<p class="pending">${L(["个人专访：即将发布","Interview: coming soon"])}</p>` : "")}
         <h4>${L(["其他经历","Also"])}</h4><p>${L(a.also)}</p></div>
     </article>`, C.name);
-  document.getElementById("rooms").innerHTML = research + ex + mu + ab;
+  document.getElementById("rooms").innerHTML = research + ex + mu + wr + ab;
 }
 
 /* photos: show if the file exists, otherwise show a slot (or hide it) */
